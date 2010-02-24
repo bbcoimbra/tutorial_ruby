@@ -13,7 +13,7 @@ Modules serve two purposes:
 
 * First they act as namespace, letting you define methods whose names will not clash with those defined elsewhere. The examples p058mytrig.rb, p059mymoral.rb, p060usemodule.rb illustrates this.
 
-<code class='ruby'>
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
   # p058mytrig.rb
   module Trig
     PI = 3.1416
@@ -40,11 +40,11 @@ Modules serve two purposes:
   require 'p059mymoral'
   Trig.sin(Trig::PI/4)
   Moral.sin(Moral::VERY_BAD)
-</code>
+<% end -%>
 
 * Second, they allow you to share functionality between classes - if a class mixes in a module, that module's instance methods become available as if they had been defined in the class. They get mixed in. The program p061mixins.rb illustrates this.
 
-<code class='ruby'>
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
   # p061mixins.rb
   module D
     def initialize(name)
@@ -81,7 +81,7 @@ Modules serve two purposes:
   et = EightTrack.new("Real Pillow")
   puts ph.who_am_i?
   puts et.who_am_i?
-</code>
+<% end -%>
 
 <div class='box'>
 Observe how we use require or load. require and load take strings as their arguments.
@@ -98,7 +98,7 @@ Although every class is a module, the include method does not allow a class to b
 
 Some more examples:
 
-<code class='ruby'>
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
   #  p062stuff.rb
   #  A module may contain constants, methods and classes.
   #  No instances
@@ -137,7 +137,7 @@ Some more examples:
   $: << "c:/"         # add a folder to the load path
   puts $:
   puts Stuff.m(5)     # Stuff class methods not called from D object
-</code>
+<% end -%>
 
 <div class='box'>
 Remember that you can mix in more than one module in a class. However, a class cannot inherit from more than one class. Class names tend to be nouns, while module names are often adjectives.

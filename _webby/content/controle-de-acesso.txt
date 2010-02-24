@@ -17,7 +17,7 @@ Ruby gives you three levels of protection:
 
 Access control is determined dynamically, as the program runs, not statically. You will get an access violation only when the code attempts to execute the restricted method. Let us refer to the program p047classaccess.rb below:
 
-<code class='ruby'>
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
   # p047classaccess.rb
   class ClassAccess
     def m1          # this method is public
@@ -33,13 +33,13 @@ Access control is determined dynamically, as the program runs, not statically. Y
   ca.m1
   #ca.m2
   #ca.m3
-</code>
+<% end -%>
 
 If you remove the comments of the last two statements in the above program, you will get an access violation runtime error.
 
 Alternatively, you can set access levels of named methods by listing them as arguments to the access control functions.
 
-<code class='ruby'>
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
   class ClassAccess
     def m1       # this method is public
     end
@@ -48,11 +48,11 @@ Alternatively, you can set access levels of named methods by listing them as arg
     private :m4, :m5
   end
 
-</code>
+<% end -%>
 
 Here is an example (p047zclassaccess.rb) for 'protected' access control:
 
-<code class='ruby'>
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
   # p047zclassaccess.rb
   class Person
     def initialize(age)
@@ -75,16 +75,16 @@ Here is an example (p047zclassaccess.rb) for 'protected' access control:
   marcos = Person.new(34)
   puts chris.compare_age(marcos)
   #puts chris.age
-</code>
+<% end -%>
 
 
 The output is:
 
-<code class='bash'>
+<% coderay(:lang => "bash", :line_numbers => "inline") do -%>
   >ruby p047zclassaccess.rb
   The other object's age is bigger.
   >Exit code: 0
-</code>
+<% end -%>
 
 
 In the preceding example, we compare one Person instance with another Person instance. The comparison, however, depends on the result of a call to the method age. The object doing the comparing (chris, in the example) has to ask the other object (marcos) to execute its age method. So, age can't be private.
@@ -111,7 +111,7 @@ h2. Accessor methods
 
 Encapsulation is achieved when the instance variables are private to an object and you have public getters and setters (in Ruby, we call them attribute readers and attribute writers). To make instance variables available, Ruby provides accessor methods that return their values. The program p048accessor.rb illustrates the same.
 
-<code class='ruby'>
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
   # p048accessor.rb
   # First without accessor methods
   class Song
@@ -148,13 +148,13 @@ Encapsulation is achieved when the instance variables are private to an object a
   song = Song.new("Brazil", "Ivete Sangalo")
   puts song.name
   puts song.artist
-</code>
+<% end -%>
 
 h3. Are instance variables inherited by a sub-class?
 
 David Black, the author of Ruby for Rails, has this to say: Instance variables are per-object, not per-class, and they're not inherited. But if a method uses one, and that method is available to subclasses, then it will still use the variable -- but "the variable" in the sense of one per object. See the following program - p049instvarinherit.rb:
 
-<code class='ruby'>
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
   # p049instvarinherit.rb
   class C
     def initialize
@@ -175,16 +175,16 @@ David Black, the author of Ruby for Rails, has this to say: Instance variables a
   d = D.new
   d.increase_n
   d.show_n
-</code>
+<% end -%>
 
 
 The output is:
 
-<code class='ruby'>
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
   >ruby p049instvarinherit.rb
   n is 2000
   >Exit code: 0
-</code>
+<% end -%>
 
 
 The @n in D's methods is the same (for each instance) as the one in C.
@@ -197,27 +197,27 @@ h2. Top-level methods
 
 When you write code at the top level, Ruby provides you automatically with a default self. This object is a direct instance of Object. When you ask it to describe itself:
 
-<code class='ruby'>
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
   puts self
-</code>
+<% end -%>
 
 
 it says:
 
-<code class='ruby'>
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
   main
-</code>
+<% end -%>
 
 
 The object main is the current object as soon as your program starts up.
 
 Suppose you define a method at the top level:
 
-<code class='ruby'>
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
   def talk
     puts "Hello"
   end
-</code>
+<% end -%>
 
 
 Who, or what, does the method belong to? It's not inside a class or module definition block, so it doesn't appear to be an instance method of a class or module. It's not attached to any particular object (as in def obj.talk). What is it? Top-level methods are private instance methods of the Kernel module.
@@ -226,9 +226,9 @@ Because top-level methods are private, you can't call them with an explicit rece
 
 From our earliest examples onward, we've been making bareword-style calls to puts and print, like this one:
 
-<code class='ruby'>
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
   puts 'Hello'
-</code>
+<% end -%>
 
 puts and print are built-in private instance methods of Kernel. That's why you can - indeed, must - call them without a receiver.
 

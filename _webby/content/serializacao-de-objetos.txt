@@ -11,7 +11,7 @@ Java features the ability to serialize objects, letting you store them somewhere
 
 We will write a basic class p051gamecharacters.rb just for testing marshalling.
 
-<code class='ruby'>
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
   # p051gamecharacters.rb
   class GameCharacter
     def initialize(power, type, weapons)
@@ -21,11 +21,11 @@ We will write a basic class p051gamecharacters.rb just for testing marshalling.
     end
     attr_reader :power, :type, :weapons
   end
-</code>
+<% end -%>
 
 The program p052dumpgc.rb creates an object of the above class and then uses Marshal.dump to save a serialized version of it to the disk.
 
-<code class='ruby'>
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
   # p052dumpgc.rb
   require 'p051gamecharacters'
   gc = GameCharacter.new(120, 'Magician', ['spells', 'invisibility'])
@@ -37,11 +37,11 @@ The program p052dumpgc.rb creates an object of the above class and then uses Mar
   File.open('game', 'w+') do |f|
     Marshal.dump(gc, f)
   end
-</code>
+<% end -%>
 
 The program p053loadgc.rb uses Marshal.load to read it in.
 
-<code class='ruby'>
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
   # p053loadgc.rb
   require 'p051gamecharacters'
   File.open('game') do |f|
@@ -52,6 +52,6 @@ The program p053loadgc.rb uses Marshal.load to read it in.
   @gc.weapons.each do |w|
     puts w + ' '
   end
-</code>
+<% end -%>
 
 Marshal only serializes data structures. It can't serialize Ruby code (like Proc objects), or resources allocated by other processes (like file handles or database connections). Marshal just gives you an error when you try to serialize a file.

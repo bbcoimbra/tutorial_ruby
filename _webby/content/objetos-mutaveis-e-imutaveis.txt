@@ -21,7 +21,7 @@ h2. Freezing Objects
 
 The freeze method in class Object prevents you from changing an object, effectively turning an object into a constant. After we freeze an object, an attempt to modify it results in TypeError. The following program p050xfreeze.rb illustrates this:
 
-<code class='ruby'>
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
   str = 'A simple string. '
   str.freeze
   begin
@@ -30,18 +30,18 @@ The freeze method in class Object prevents you from changing an object, effectiv
     puts "#{err.class} #{err}"
   end
   # The output is - TypeError can't modify frozen string
-</code>
+<% end -%>
 
 
 However, freeze operates on an object reference, not on a variable. This means that any operation resulting in a new object will work. This is illustrated by the following example:
 
-<code class='ruby'>
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
   str = 'Original string - '
   str.freeze
   str += 'attachment'
   puts str
   # Output is - Original string - attachment
-</code>
+<% end -%>
 
 
 The expression str + 'attachment' is evaluated to a new object, which is then assigned to str. The object is not changed, but the variable str now refers to a new object.
@@ -50,7 +50,7 @@ h2. frozen?
 
 A method frozen? tells you whether an object is frozen or not. Let's take an example here:
 
-<code class='ruby'>
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
   a = b = 'Original String'
   b.freeze
   puts a.frozen? # true
@@ -60,7 +60,7 @@ A method frozen? tells you whether an object is frozen or not. Let's take an exa
   puts b
   puts a.frozen? # false
   puts b.frozen? # true
-</code>
+<% end -%>
 
 Let us understand what we are doing here - a and b are two variables both of which are pointing to a string object - Original String. We then freeze the object Original String. Hence both a and b are now pointing to the frozen object Original String. This is verified by the statements puts a.frozen? and puts b.frozen?. Next, we create a new string object New String and make variable a point to this new object New String. Variable b is still pointing to the frozen object while a is not. This verified by the last 2 statements of the program.
 

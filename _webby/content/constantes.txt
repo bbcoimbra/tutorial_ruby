@@ -9,18 +9,18 @@ p(title). <%= h(@page.title) %>
 
 A Ruby constant is like a variable, except that its value is supposed to remain constant for the duration of the program. The Ruby interpreter does not actually enforce the constancy of constants, but it does issue a warning if a program changes the value of a constant (as shown in this trivial example) - p054constwarn.rb
 
-<code class='ruby'>
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
   # p054constwarn.rb
   A_CONST = 10
   A_CONST = 20
-</code>
+<% end -%>
 
 
 Produces a warning:
 
-<code class='bash'>
+<% coderay(:lang => "bash", :line_numbers => "inline") do -%>
   p054constwarn.rb:3: warning: already initialized constant A_CONST
-</code>
+<% end -%>
 
 
 Lexically, the names of constants look like the names of local variables, except that they begin with a capital letter. By convention, most constants are written in all uppercase with underscores to separate words, LIKE_THIS. Ruby class and module names are also constants, but they are conventionally written using initial capital letters and camel case, LikeThis.
@@ -29,14 +29,14 @@ Note that constants do not exist until a value is actually assigned to them.
 
 Although constants should not be changed, you can modify the internal states of the objects they reference, as seen in p055constalter.rb
 
-<code class='ruby'>
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
   # p055constalter.rb
   A_CONST = "Doshi"
   B_CONST = A_CONST
   A_CONST[0] = "J" # alter string referenced by constant
   puts A_CONST # displays Joshi
   puts B_CONST # also displays Joshi
-</code>
+<% end -%>
 
 <div class='box'>
 IN RAILS: You can find examples of this kind of operation (modify) in the Rails source code, where constants figure prominently and the objects they represent undergo fairly frequent changes.
@@ -52,7 +52,7 @@ Note:
 
 The program p056const.rb shows all of this:
 
-<code class='ruby'>
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
   OUTER_CONST = 99
 
   class Const
@@ -66,12 +66,12 @@ The program p056const.rb shows all of this:
   puts Const::CONST
   puts ::OUTER_CONST
   puts Const::NEW_CONST = 123
-</code>
+<% end -%>
 
 
 Another elaborate example on own methods in a class is p057mymethods2.rb In this example we shall also see how to write a class method.
 
-<code class='ruby'>
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
   # p057mymethods2.rb
   # variables and methods start lowercase
   $glob = 5             # global variables start with $
@@ -106,7 +106,7 @@ Another elaborate example on own methods in a class is p057mymethods2.rb In this
   other = TestVar.new(17)
   puts other.inspect
   puts TestVar.cla
-</code>
+<% end -%>
 
 h2. Summary
 
