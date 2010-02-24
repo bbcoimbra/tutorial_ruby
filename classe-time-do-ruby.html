@@ -33,41 +33,38 @@
       <p class="title">classe time do ruby</p>
 <p>The Time class in Ruby has a powerful formatting function which can help you represent the time in a variety of ways. The Time class contains Ruby&#8217;s interface to the set of time libraries written in C. Time zero for Ruby is the first second GMT of January 1, 1970. Ruby&#8217;s DateTime class is superior to Time for astronomical and historical applications, but you can use Time  for most everyday programs.</p>
 <p>The strftime function is modelled after C&#8217;s printf. The p042time.rb program shows some of these functions.</p>
-<p><code class='ruby'>
-  t = Time.now</p>
-<ol>
-	<li>to get day, month and year with century</li>
-	<li>also hour, minute and second<br />
-  puts t.strftime(&#8220;%d/%m/%Y %H:%M:%S&#8221;)</li>
-</ol>
-<ol>
-	<li>You can use the upper case A and B to get the full</li>
-	<li>name of the weekday and month, respectively<br />
-  puts t.strftime(&#8220;%A&#8221;)<br />
-  puts t.strftime(&#8220;%B&#8221;)</li>
-</ol>
-<ol>
-	<li>You can use the lower case a and b to get the abbreviated</li>
-	<li>name of the weekday and month, respectively<br />
-  puts t.strftime(&#8220;%a&#8221;)<br />
-  puts t.strftime(&#8220;%b&#8221;)</li>
-</ol>
-<ol>
-	<li>24 hour clock and Time zone name<br />
-  puts t.strftime(&#8220;at %H:%M %Z&#8221;)<br />
-</code></li>
-</ol>
+<div class="CodeRay">
+<pre><span class="no"> 1</span>   t = <span class="co">Time</span>.now
+<span class="no"> 2</span>   <span class="c"># to get day, month and year with century</span>
+<span class="no"> 3</span>   <span class="c"># also hour, minute and second</span>
+<span class="no"> 4</span>   puts t.strftime(<span class="s"><span class="dl">&quot;</span><span class="k">%d/%m/%Y %H:%M:%S</span><span class="dl">&quot;</span></span>)
+<span class="no"> 5</span> 
+<span class="no"> 6</span>   <span class="c"># You can use the upper case A and B to get the full</span>
+<span class="no"> 7</span>   <span class="c"># name of the weekday and month, respectively</span>
+<span class="no"> 8</span>   puts t.strftime(<span class="s"><span class="dl">&quot;</span><span class="k">%A</span><span class="dl">&quot;</span></span>)
+<span class="no"> 9</span>   puts t.strftime(<span class="s"><span class="dl">&quot;</span><span class="k">%B</span><span class="dl">&quot;</span></span>)
+<span class="no"><strong>10</strong></span> 
+<span class="no">11</span>   <span class="c"># You can use the lower case a and b to get the abbreviated</span>
+<span class="no">12</span>   <span class="c"># name of the weekday and month, respectively</span>
+<span class="no">13</span>   puts t.strftime(<span class="s"><span class="dl">&quot;</span><span class="k">%a</span><span class="dl">&quot;</span></span>)
+<span class="no">14</span>   puts t.strftime(<span class="s"><span class="dl">&quot;</span><span class="k">%b</span><span class="dl">&quot;</span></span>)
+<span class="no">15</span> 
+<span class="no">16</span>   <span class="c"># 24 hour clock and Time zone name</span>
+<span class="no">17</span>   puts t.strftime(<span class="s"><span class="dl">&quot;</span><span class="k">at %H:%M %Z</span><span class="dl">&quot;</span></span>)
+</pre>
+</div>
 <p>The output is:</p>
-<p><code class='bash'>
-  &gt;ruby p042time.rb
-  10/09/2006 10:06:31
-  Sunday
-  September
-  Sun
-  Sep
-  at 10:06 India Standard Time
-  &gt;Exit code: 0
-</code></p>
+<div class="CodeRay">
+<pre><span class="no">1</span>   &gt;ruby p042time.rb
+<span class="no">2</span>   10/09/2006 10:06:31
+<span class="no">3</span>   Sunday
+<span class="no">4</span>   September
+<span class="no">5</span>   Sun
+<span class="no">6</span>   Sep
+<span class="no">7</span>   at 10:06 India Standard Time
+<span class="no">8</span>   &gt;Exit code: 0
+</pre>
+</div>
 <h2>Summary</h2>
 <p>I have listed down all the important points you need to remember after you have completed the following topics: Access Control, Exceptions, Logging, Ruby Time class.</p>
    </div>

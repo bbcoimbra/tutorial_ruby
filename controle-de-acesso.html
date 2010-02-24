@@ -39,68 +39,70 @@
 	<li>Private methods cannot be called with an explicit receiver &#8211; the receiver is always self. This means that private methods can be called only in the context of the current object; you cannot invoke another object&#8217;s private methods.</li>
 </ol>
 <p>Access control is determined dynamically, as the program runs, not statically. You will get an access violation only when the code attempts to execute the restricted method. Let us refer to the program p047classaccess.rb below:</p>
-<p><code class='ruby'></p>
-<ol>
-	<li>p047classaccess.rb<br />
-  class ClassAccess<br />
-    def m1          # this method is public<br />
-    end<br />
-    protected<br />
-      def m2        # this method is protected<br />
-      end<br />
-    private<br />
-      def m3        # this method is private<br />
-      end<br />
-  end<br />
-  ca = ClassAccess.new<br />
-  ca.m1<br />
-  #ca.m2<br />
-  #ca.m3<br />
-</code></li>
-</ol>
+<div class="CodeRay">
+<pre><span class="no"> 1</span>   <span class="c"># p047classaccess.rb</span>
+<span class="no"> 2</span>   <span class="r">class</span> <span class="cl">ClassAccess</span>
+<span class="no"> 3</span>     <span class="r">def</span> <span class="fu">m1</span>          <span class="c"># this method is public</span>
+<span class="no"> 4</span>     <span class="r">end</span>
+<span class="no"> 5</span>     protected
+<span class="no"> 6</span>       <span class="r">def</span> <span class="fu">m2</span>        <span class="c"># this method is protected</span>
+<span class="no"> 7</span>       <span class="r">end</span>
+<span class="no"> 8</span>     private
+<span class="no"> 9</span>       <span class="r">def</span> <span class="fu">m3</span>        <span class="c"># this method is private</span>
+<span class="no"><strong>10</strong></span>       <span class="r">end</span>
+<span class="no">11</span>   <span class="r">end</span>
+<span class="no">12</span>   ca = <span class="co">ClassAccess</span>.new
+<span class="no">13</span>   ca.m1
+<span class="no">14</span>   <span class="c">#ca.m2</span>
+<span class="no">15</span>   <span class="c">#ca.m3</span>
+</pre>
+</div>
 <p>If you remove the comments of the last two statements in the above program, you will get an access violation runtime error.</p>
 <p>Alternatively, you can set access levels of named methods by listing them as arguments to the access control functions.</p>
-<p><code class='ruby'>
-  class ClassAccess
-    def m1       # this method is public
-    end
-    public :m1
-    protected :m2, :m3
-    private :m4, :m5
-  end</p>
-<p></code></p>
+<div class="CodeRay">
+<pre><span class="no">1</span>   <span class="r">class</span> <span class="cl">ClassAccess</span>
+<span class="no">2</span>     <span class="r">def</span> <span class="fu">m1</span>       <span class="c"># this method is public</span>
+<span class="no">3</span>     <span class="r">end</span>
+<span class="no">4</span>     public <span class="sy">:m1</span>
+<span class="no">5</span>     protected <span class="sy">:m2</span>, <span class="sy">:m3</span>
+<span class="no">6</span>     private <span class="sy">:m4</span>, <span class="sy">:m5</span>
+<span class="no">7</span>   <span class="r">end</span>
+<span class="no">8</span> 
+</pre>
+</div>
 <p>Here is an example (p047zclassaccess.rb) for &#8216;protected&#8217; access control:</p>
-<p><code class='ruby'></p>
-<ol>
-	<li>p047zclassaccess.rb<br />
-  class Person<br />
-    def initialize(age)<br />
-      @age = age<br />
-    end<br />
-    def age<br />
-      @age<br />
-    end<br />
-    def compare_age&#169;<br />
-      if c.age &gt; age<br />
-        &#8220;The other object&#8217;s age is bigger.&#8221;<br />
-      else<br />
-        &#8220;The other object&#8217;s age is the same or smaller.&#8221;<br />
-      end<br />
-    end<br />
-    protected :age<br />
-  end</li>
-</ol>
-chris = Person.new(25)
-marcos = Person.new(34)
-puts chris.compare_age(marcos)
-#puts chris.age
-<p></code></p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span>   <span class="c"># p047zclassaccess.rb</span>
+<span class="no"> 2</span>   <span class="r">class</span> <span class="cl">Person</span>
+<span class="no"> 3</span>     <span class="r">def</span> <span class="fu">initialize</span>(age)
+<span class="no"> 4</span>       <span class="iv">@age</span> = age
+<span class="no"> 5</span>     <span class="r">end</span>
+<span class="no"> 6</span>     <span class="r">def</span> <span class="fu">age</span>
+<span class="no"> 7</span>       <span class="iv">@age</span>
+<span class="no"> 8</span>     <span class="r">end</span>
+<span class="no"> 9</span>     <span class="r">def</span> <span class="fu">compare_age</span>(c)
+<span class="no"><strong>10</strong></span>       <span class="r">if</span> c.age &gt; age
+<span class="no">11</span>         <span class="s"><span class="dl">&quot;</span><span class="k">The other object's age is bigger.</span><span class="dl">&quot;</span></span>
+<span class="no">12</span>       <span class="r">else</span>
+<span class="no">13</span>         <span class="s"><span class="dl">&quot;</span><span class="k">The other object's age is the same or smaller.</span><span class="dl">&quot;</span></span>
+<span class="no">14</span>       <span class="r">end</span>
+<span class="no">15</span>     <span class="r">end</span>
+<span class="no">16</span>     protected <span class="sy">:age</span>
+<span class="no">17</span>   <span class="r">end</span>
+<span class="no">18</span> 
+<span class="no">19</span>   chris = <span class="co">Person</span>.new(<span class="i">25</span>)
+<span class="no"><strong>20</strong></span>   marcos = <span class="co">Person</span>.new(<span class="i">34</span>)
+<span class="no">21</span>   puts chris.compare_age(marcos)
+<span class="no">22</span>   <span class="c">#puts chris.age</span>
+</pre>
+</div>
 <p>The output is:</p>
-<p><code class='bash'>
-  &gt;ruby p047zclassaccess.rb
-  The other object's age is bigger.
-  &gt;Exit code: 0
-</code></p>
+<div class="CodeRay">
+<pre><span class="no">1</span>   &gt;ruby p047zclassaccess.rb
+<span class="no">2</span>   The other object's age is bigger.
+<span class="no">3</span>   &gt;Exit code: 0
+</pre>
+</div>
 <p>In the preceding example, we compare one Person instance with another Person instance. The comparison, however, depends on the result of a call to the method age. The object doing the comparing (chris, in the example) has to ask the other object (marcos) to execute its age method. So, age can&#8217;t be private.</p>
 <p>That&#8217;s where the protected level comes in. With age protected rather than private, chris can ask marcos to execute age, because chris and marcos are both instances of the same class. But if you try to call the age method of a Person object when self is anything other than a Person object, the method will fail.</p>
 <p>A protected method is thus like a private method, but with an exemption for cases where the class of self (chris) and the class of the object having the method called on it (marcos) are the same.</p>
@@ -115,99 +117,107 @@ puts chris.compare_age(marcos)
 </div>
 <h2>Accessor methods</h2>
 <p>Encapsulation is achieved when the instance variables are private to an object and you have public getters and setters (in Ruby, we call them attribute readers and attribute writers). To make instance variables available, Ruby provides accessor methods that return their values. The program p048accessor.rb illustrates the same.</p>
-<p><code class='ruby'></p>
-<ol>
-	<li>p048accessor.rb</li>
-	<li>First without accessor methods<br />
-  class Song<br />
-    def initialize(name, artist)<br />
-      @name     = name<br />
-      @artist   = artist<br />
-    end<br />
-    def name<br />
-      @name<br />
-    end<br />
-    def artist<br />
-      @artist<br />
-    end<br />
-  end</li>
-</ol>
-song = Song.new(&#8220;Brazil&#8221;, &#8220;Ivete Sangalo&#8221;)
-puts song.name
-puts song.artist
-<ol>
-	<li>Now, with accessor methods<br />
-  class Song<br />
-    def initialize(name, artist)<br />
-      @name     = name<br />
-      @artist   = artist<br />
-    end<br />
-    attr_reader :name, :artist  # create reader only</li>
-	<li>For creating reader and writer methods</li>
-	<li>attr_accessor :name</li>
-	<li>For creating writer methods</li>
-	<li>attr_writer :name</li>
-</ol>
-end
-song = Song.new(&#8220;Brazil&#8221;, &#8220;Ivete Sangalo&#8221;)
-puts song.name
-puts song.artist
-<p></code></p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span>   <span class="c"># p048accessor.rb</span>
+<span class="no"> 2</span>   <span class="c"># First without accessor methods</span>
+<span class="no"> 3</span>   <span class="r">class</span> <span class="cl">Song</span>
+<span class="no"> 4</span>     <span class="r">def</span> <span class="fu">initialize</span>(name, artist)
+<span class="no"> 5</span>       <span class="iv">@name</span>     = name
+<span class="no"> 6</span>       <span class="iv">@artist</span>   = artist
+<span class="no"> 7</span>     <span class="r">end</span>
+<span class="no"> 8</span>     <span class="r">def</span> <span class="fu">name</span>
+<span class="no"> 9</span>       <span class="iv">@name</span>
+<span class="no"><strong>10</strong></span>     <span class="r">end</span>
+<span class="no">11</span>     <span class="r">def</span> <span class="fu">artist</span>
+<span class="no">12</span>       <span class="iv">@artist</span>
+<span class="no">13</span>     <span class="r">end</span>
+<span class="no">14</span>   <span class="r">end</span>
+<span class="no">15</span> 
+<span class="no">16</span>   song = <span class="co">Song</span>.new(<span class="s"><span class="dl">&quot;</span><span class="k">Brazil</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="k">Ivete Sangalo</span><span class="dl">&quot;</span></span>)
+<span class="no">17</span>   puts song.name
+<span class="no">18</span>   puts song.artist
+<span class="no">19</span> 
+<span class="no"><strong>20</strong></span>   <span class="c"># Now, with accessor methods</span>
+<span class="no">21</span>   <span class="r">class</span> <span class="cl">Song</span>
+<span class="no">22</span>     <span class="r">def</span> <span class="fu">initialize</span>(name, artist)
+<span class="no">23</span>       <span class="iv">@name</span>     = name
+<span class="no">24</span>       <span class="iv">@artist</span>   = artist
+<span class="no">25</span>     <span class="r">end</span>
+<span class="no">26</span>     attr_reader <span class="sy">:name</span>, <span class="sy">:artist</span>  <span class="c"># create reader only</span>
+<span class="no">27</span>     <span class="c"># For creating reader and writer methods</span>
+<span class="no">28</span>     <span class="c"># attr_accessor :name</span>
+<span class="no">29</span>     <span class="c"># For creating writer methods</span>
+<span class="no"><strong>30</strong></span>     <span class="c"># attr_writer :name</span>
+<span class="no">31</span> 
+<span class="no">32</span>   <span class="r">end</span>
+<span class="no">33</span> 
+<span class="no">34</span>   song = <span class="co">Song</span>.new(<span class="s"><span class="dl">&quot;</span><span class="k">Brazil</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="k">Ivete Sangalo</span><span class="dl">&quot;</span></span>)
+<span class="no">35</span>   puts song.name
+<span class="no">36</span>   puts song.artist
+</pre>
+</div>
 <h3>Are instance variables inherited by a sub-class?</h3>
 <p>David Black, the author of Ruby for Rails, has this to say: Instance variables are per-object, not per-class, and they&#8217;re not inherited. But if a method uses one, and that method is available to subclasses, then it will still use the variable &#8212; but &#8220;the variable&#8221; in the sense of one per object. See the following program &#8211; p049instvarinherit.rb:</p>
-<p><code class='ruby'></p>
-<ol>
-	<li>p049instvarinherit.rb<br />
-  class C<br />
-    def initialize<br />
-      @n = 100<br />
-    end</li>
-</ol>
-def increase_n
-@n *= 20
-end
-end
-class D &lt; C
-def show_n
-puts &#8220;n is #{@n}&#8221;
-end
-end
-d = D.new
-d.increase_n
-d.show_n
-<p></code></p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span>   <span class="c"># p049instvarinherit.rb</span>
+<span class="no"> 2</span>   <span class="r">class</span> <span class="cl">C</span>
+<span class="no"> 3</span>     <span class="r">def</span> <span class="fu">initialize</span>
+<span class="no"> 4</span>       <span class="iv">@n</span> = <span class="i">100</span>
+<span class="no"> 5</span>     <span class="r">end</span>
+<span class="no"> 6</span> 
+<span class="no"> 7</span>     <span class="r">def</span> <span class="fu">increase_n</span>
+<span class="no"> 8</span>       <span class="iv">@n</span> *= <span class="i">20</span>
+<span class="no"> 9</span>     <span class="r">end</span>
+<span class="no"><strong>10</strong></span>   <span class="r">end</span>
+<span class="no">11</span> 
+<span class="no">12</span>   <span class="r">class</span> <span class="cl">D</span> &lt; <span class="co">C</span>
+<span class="no">13</span>     <span class="r">def</span> <span class="fu">show_n</span>
+<span class="no">14</span>       puts <span class="s"><span class="dl">&quot;</span><span class="k">n is </span><span class="il"><span class="idl">#{</span><span class="iv">@n</span><span class="idl">}</span></span><span class="dl">&quot;</span></span>
+<span class="no">15</span>     <span class="r">end</span>
+<span class="no">16</span>   <span class="r">end</span>
+<span class="no">17</span> 
+<span class="no">18</span>   d = <span class="co">D</span>.new
+<span class="no">19</span>   d.increase_n
+<span class="no"><strong>20</strong></span>   d.show_n
+</pre>
+</div>
 <p>The output is:</p>
-<p><code class='ruby'>
-  &gt;ruby p049instvarinherit.rb
-  n is 2000
-  &gt;Exit code: 0
-</code></p>
+<div class="CodeRay">
+<pre><span class="no">1</span>   &gt;ruby p049instvarinherit.rb
+<span class="no">2</span>   n is <span class="i">2000</span>
+<span class="no">3</span>   &gt;<span class="co">Exit</span> code: <span class="i">0</span>
+</pre>
+</div>
 <p>The @n in D&#8217;s methods is the same (for each instance) as the one in C.</p>
 <div class='box'>
 <p>All Ruby objects have a set of instance variables. These are not defined by the object&#8217;s class &#8211; they are simply created when a value is assigned to them. Because instance variables are not defined by a class, they are unrelated to subclassing and the inheritance mechanism.</p>
 </div>
 <h2>Top-level methods</h2>
 <p>When you write code at the top level, Ruby provides you automatically with a default self. This object is a direct instance of Object. When you ask it to describe itself:</p>
-<p><code class='ruby'>
-  puts self
-</code></p>
+<div class="CodeRay">
+<pre><span class="no">1</span>   puts <span class="pc">self</span>
+</pre>
+</div>
 <p>it says:</p>
-<p><code class='ruby'>
-  main
-</code></p>
+<div class="CodeRay">
+<pre><span class="no">1</span>   main
+</pre>
+</div>
 <p>The object main is the current object as soon as your program starts up.</p>
 <p>Suppose you define a method at the top level:</p>
-<p><code class='ruby'>
-  def talk
-    puts "Hello"
-  end
-</code></p>
+<div class="CodeRay">
+<pre><span class="no">1</span>   <span class="r">def</span> <span class="fu">talk</span>
+<span class="no">2</span>     puts <span class="s"><span class="dl">&quot;</span><span class="k">Hello</span><span class="dl">&quot;</span></span>
+<span class="no">3</span>   <span class="r">end</span>
+</pre>
+</div>
 <p>Who, or what, does the method belong to? It&#8217;s not inside a class or module definition block, so it doesn&#8217;t appear to be an instance method of a class or module. It&#8217;s not attached to any particular object (as in def obj.talk). What is it? Top-level methods are private instance methods of the Kernel module.</p>
 <p>Because top-level methods are private, you can&#8217;t call them with an explicit receiver; you can only call them by using the implied receiver, self. That means self must be an object on whose method search path the given top-level method lies. But every object&#8217;s search path includes the Kernel module, because the class Object mixes in Kernel, and every object&#8217;s class has Object as an ancestor. That means you can always call any top-level method, wherever you are in your program. It also means you can never use an explicit receiver on a top-level method.</p>
 <p>From our earliest examples onward, we&#8217;ve been making bareword-style calls to puts and print, like this one:</p>
-<p><code class='ruby'>
-  puts 'Hello'
-</code></p>
+<div class="CodeRay">
+<pre><span class="no">1</span>   puts <span class="s"><span class="dl">'</span><span class="k">Hello</span><span class="dl">'</span></span>
+</pre>
+</div>
 <p>puts and print are built-in private instance methods of Kernel. That&#8217;s why you can &#8211; indeed, must &#8211; call them without a receiver.</p>
 <p>We shall talk about self in more details, later.</p>
    </div>

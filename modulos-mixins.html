@@ -36,83 +36,77 @@
 <ul>
 	<li>First they act as namespace, letting you define methods whose names will not clash with those defined elsewhere. The examples p058mytrig.rb, p059mymoral.rb, p060usemodule.rb illustrates this.</li>
 </ul>
-<p><code class='ruby'></p>
-<ol>
-	<li>p058mytrig.rb<br />
-  module Trig<br />
-    PI = 3.1416</li>
-	<li>class methods<br />
-    def Trig.sin(x)</li>
-	<li>&#8230;<br />
-    end<br />
-    def Trig.cos(x)</li>
-	<li>&#8230;<br />
-    end<br />
-  end</li>
-</ol>
-<ol>
-	<li>p059mymoral.rb<br />
-  module Moral<br />
-    VERY_BAD = 0<br />
-    BAD         = 1<br />
-    def Moral.sin(badness)</li>
-	<li>&#8230;<br />
-    end<br />
-  end</li>
-</ol>
-<ol>
-	<li>p060usemodule.rb<br />
-  require &#8216;p058mytrig&#8217;<br />
-  require &#8216;p059mymoral&#8217;<br />
-  Trig.sin(Trig::PI/4)<br />
-  Moral.sin(Moral::VERY_BAD)<br />
-</code></li>
-</ol>
+<div class="CodeRay">
+<pre><span class="no"> 1</span>   <span class="c"># p058mytrig.rb</span>
+<span class="no"> 2</span>   <span class="r">module</span> <span class="cl">Trig</span>
+<span class="no"> 3</span>     <span class="co">PI</span> = <span class="fl">3.1416</span>
+<span class="no"> 4</span>     <span class="c"># class methods</span>
+<span class="no"> 5</span>     <span class="r">def</span> <span class="co">Trig</span>.sin(x)
+<span class="no"> 6</span>       <span class="c"># ...</span>
+<span class="no"> 7</span>     <span class="r">end</span>
+<span class="no"> 8</span>     <span class="r">def</span> <span class="co">Trig</span>.cos(x)
+<span class="no"> 9</span>       <span class="c"># ...</span>
+<span class="no"><strong>10</strong></span>     <span class="r">end</span>
+<span class="no">11</span>   <span class="r">end</span>
+<span class="no">12</span> 
+<span class="no">13</span>   <span class="c"># p059mymoral.rb</span>
+<span class="no">14</span>   <span class="r">module</span> <span class="cl">Moral</span>
+<span class="no">15</span>     <span class="co">VERY_BAD</span> = <span class="i">0</span>
+<span class="no">16</span>     <span class="co">BAD</span>         = <span class="i">1</span>
+<span class="no">17</span>     <span class="r">def</span> <span class="co">Moral</span>.sin(badness)
+<span class="no">18</span>       <span class="c"># ...</span>
+<span class="no">19</span>     <span class="r">end</span>
+<span class="no"><strong>20</strong></span>   <span class="r">end</span>
+<span class="no">21</span> 
+<span class="no">22</span>   <span class="c"># p060usemodule.rb</span>
+<span class="no">23</span>   require <span class="s"><span class="dl">'</span><span class="k">p058mytrig</span><span class="dl">'</span></span>
+<span class="no">24</span>   require <span class="s"><span class="dl">'</span><span class="k">p059mymoral</span><span class="dl">'</span></span>
+<span class="no">25</span>   <span class="co">Trig</span>.sin(<span class="co">Trig</span>::<span class="co">PI</span>/<span class="i">4</span>)
+<span class="no">26</span>   <span class="co">Moral</span>.sin(<span class="co">Moral</span>::<span class="co">VERY_BAD</span>)
+</pre>
+</div>
 <ul>
 	<li>Second, they allow you to share functionality between classes &#8211; if a class mixes in a module, that module&#8217;s instance methods become available as if they had been defined in the class. They get mixed in. The program p061mixins.rb illustrates this.</li>
 </ul>
-<p><code class='ruby'></p>
-<ol>
-	<li>p061mixins.rb<br />
-  module D<br />
-    def initialize(name)<br />
-      @name =name<br />
-    end<br />
-    def to_s<br />
-      @name<br />
-    end<br />
-  end</li>
-</ol>
-module Debug
-include D
-<ol>
-	<li>Methods that act as queries are often</li>
-	<li>named with a trailing ?<br />
-    def who_am_i?<br />
-      &#8220;#{self.class.name} (\##{self.object_id}): #{self.to_s}&#8221;<br />
-    end<br />
-  end</li>
-</ol>
-class Phonograph
-<ol>
-	<li>the include statement simply makes a reference to a named module</li>
-	<li>If that module is in a separate file, use require to drag the file in</li>
-	<li>before using include<br />
-    include Debug</li>
-	<li>&#8230;<br />
-  end</li>
-</ol>
-class EightTrack
-include Debug
-<ol>
-	<li>&#8230;<br />
-  end</li>
-</ol>
-ph = Phonograph.new(&#8220;West End Blues&#8221;)
-et = EightTrack.new(&#8220;Real Pillow&#8221;)
-puts ph.who_am_i?
-puts et.who_am_i?
-<p></code></p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span>   <span class="c"># p061mixins.rb</span>
+<span class="no"> 2</span>   <span class="r">module</span> <span class="cl">D</span>
+<span class="no"> 3</span>     <span class="r">def</span> <span class="fu">initialize</span>(name)
+<span class="no"> 4</span>       <span class="iv">@name</span> =name
+<span class="no"> 5</span>     <span class="r">end</span>
+<span class="no"> 6</span>     <span class="r">def</span> <span class="fu">to_s</span>
+<span class="no"> 7</span>       <span class="iv">@name</span>
+<span class="no"> 8</span>     <span class="r">end</span>
+<span class="no"> 9</span>   <span class="r">end</span>
+<span class="no"><strong>10</strong></span> 
+<span class="no">11</span>   <span class="r">module</span> <span class="cl">Debug</span>
+<span class="no">12</span>     include <span class="co">D</span>
+<span class="no">13</span>     <span class="c"># Methods that act as queries are often</span>
+<span class="no">14</span>     <span class="c"># named with a trailing ?</span>
+<span class="no">15</span>     <span class="r">def</span> <span class="fu">who_am_i?</span>
+<span class="no">16</span>       <span class="s"><span class="dl">&quot;</span><span class="il"><span class="idl">#{</span><span class="pc">self</span>.class.name<span class="idl">}</span></span><span class="k"> (</span><span class="ch">\#</span><span class="il"><span class="idl">#{</span><span class="pc">self</span>.object_id<span class="idl">}</span></span><span class="k">): </span><span class="il"><span class="idl">#{</span><span class="pc">self</span>.to_s<span class="idl">}</span></span><span class="dl">&quot;</span></span>
+<span class="no">17</span>     <span class="r">end</span>
+<span class="no">18</span>   <span class="r">end</span>
+<span class="no">19</span> 
+<span class="no"><strong>20</strong></span>   <span class="r">class</span> <span class="cl">Phonograph</span>
+<span class="no">21</span>     <span class="c"># the include statement simply makes a reference to a named module</span>
+<span class="no">22</span>     <span class="c"># If that module is in a separate file, use require to drag the file in</span>
+<span class="no">23</span>     <span class="c"># before using include</span>
+<span class="no">24</span>     include <span class="co">Debug</span>
+<span class="no">25</span>     <span class="c"># ...</span>
+<span class="no">26</span>   <span class="r">end</span>
+<span class="no">27</span> 
+<span class="no">28</span>   <span class="r">class</span> <span class="cl">EightTrack</span>
+<span class="no">29</span>     include <span class="co">Debug</span>
+<span class="no"><strong>30</strong></span>     <span class="c"># ...</span>
+<span class="no">31</span>   <span class="r">end</span>
+<span class="no">32</span> 
+<span class="no">33</span>   ph = <span class="co">Phonograph</span>.new(<span class="s"><span class="dl">&quot;</span><span class="k">West End Blues</span><span class="dl">&quot;</span></span>)
+<span class="no">34</span>   et = <span class="co">EightTrack</span>.new(<span class="s"><span class="dl">&quot;</span><span class="k">Real Pillow</span><span class="dl">&quot;</span></span>)
+<span class="no">35</span>   puts ph.who_am_i?
+<span class="no">36</span>   puts et.who_am_i?
+</pre>
+</div>
 <div class='box'>
 <p>Observe how we use require or load. require and load take strings as their arguments.</p>
 <p>require &#8216;motorcycle&#8217; or load &#8216;motorcycle.rb&#8217;</p>
@@ -122,48 +116,47 @@ include Enumerable, Comparable</p>
 <p>Although every class is a module, the include method does not allow a class to be included within another class.</p>
 </div>
 <p>Some more examples:</p>
-<p><code class='ruby'></p>
-<ol>
-	<li>p062stuff.rb</li>
-	<li>A module may contain constants, methods and classes.</li>
-	<li>No instances</li>
-</ol>
-module Stuff
-C = 10
-def Stuff.m(x)  # prefix with the module name for a class method
-C*x
-end
-def p(x)        # an instance method, mixin for other classes
-C + x
-end
-class T
-@t = 2
-end
-end
-puts Stuff::C     # Stuff namespace
-puts Stuff.m(3)   # like a class method
-x = Stuff::T.new
-<ol>
-	<li>uninitialized constant error, if you try the following</li>
-	<li>puts C</li>
-</ol>
-#&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;
-<ol>
-	<li>p063stuffusage.rb<br />
-  require &#8216;p062stuff&#8217;     # loads Stuff module from Stuff.rb</li>
-	<li>$: is a system variable &#8212; contains the path for loads<br />
-  class D<br />
-    include Stuff     # refers to the loaded module<br />
-    puts Stuff.m(4)<br />
-  end</li>
-</ol>
-d = D.new
-puts d.p(5)         # method p from Stuff
-puts $:             # array of folders to search for load
-$: &lt;&lt; &#8220;c:/&#8221;         # add a folder to the load path
-puts $:
-puts Stuff.m(5)     # Stuff class methods not called from D object
-<p></code></p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span>   <span class="c">#  p062stuff.rb</span>
+<span class="no"> 2</span>   <span class="c">#  A module may contain constants, methods and classes.</span>
+<span class="no"> 3</span>   <span class="c">#  No instances</span>
+<span class="no"> 4</span> 
+<span class="no"> 5</span>   <span class="r">module</span> <span class="cl">Stuff</span>
+<span class="no"> 6</span>     <span class="co">C</span> = <span class="i">10</span>
+<span class="no"> 7</span>     <span class="r">def</span> <span class="co">Stuff</span>.m(x)  <span class="c"># prefix with the module name for a class method</span>
+<span class="no"> 8</span>       <span class="co">C</span>*x
+<span class="no"> 9</span>     <span class="r">end</span>
+<span class="no"><strong>10</strong></span>     <span class="r">def</span> <span class="fu">p</span>(x)        <span class="c"># an instance method, mixin for other classes</span>
+<span class="no">11</span>       <span class="co">C</span> + x
+<span class="no">12</span>     <span class="r">end</span>
+<span class="no">13</span>     <span class="r">class</span> <span class="cl">T</span>
+<span class="no">14</span>       <span class="iv">@t</span> = <span class="i">2</span>
+<span class="no">15</span>     <span class="r">end</span>
+<span class="no">16</span>   <span class="r">end</span>
+<span class="no">17</span>   puts <span class="co">Stuff</span>::<span class="co">C</span>     <span class="c"># Stuff namespace</span>
+<span class="no">18</span>   puts <span class="co">Stuff</span>.m(<span class="i">3</span>)   <span class="c"># like a class method</span>
+<span class="no">19</span>   x = <span class="co">Stuff</span>::<span class="co">T</span>.new
+<span class="no"><strong>20</strong></span>   <span class="c"># uninitialized constant error, if you try the following</span>
+<span class="no">21</span>   <span class="c"># puts C</span>
+<span class="no">22</span> 
+<span class="no">23</span>   <span class="c">#------------</span>
+<span class="no">24</span> 
+<span class="no">25</span>   <span class="c"># p063stuffusage.rb</span>
+<span class="no">26</span>   require <span class="s"><span class="dl">'</span><span class="k">p062stuff</span><span class="dl">'</span></span>     <span class="c"># loads Stuff module from Stuff.rb</span>
+<span class="no">27</span>                       <span class="c"># $: is a system variable -- contains the path for loads</span>
+<span class="no">28</span>   <span class="r">class</span> <span class="cl">D</span>
+<span class="no">29</span>     include <span class="co">Stuff</span>     <span class="c"># refers to the loaded module</span>
+<span class="no"><strong>30</strong></span>     puts <span class="co">Stuff</span>.m(<span class="i">4</span>)
+<span class="no">31</span>   <span class="r">end</span>
+<span class="no">32</span> 
+<span class="no">33</span>   d = <span class="co">D</span>.new
+<span class="no">34</span>   puts d.p(<span class="i">5</span>)         <span class="c"># method p from Stuff</span>
+<span class="no">35</span>   puts <span class="gv">$:</span>             <span class="c"># array of folders to search for load</span>
+<span class="no">36</span>   <span class="gv">$:</span> &lt;&lt; <span class="s"><span class="dl">&quot;</span><span class="k">c:/</span><span class="dl">&quot;</span></span>         <span class="c"># add a folder to the load path</span>
+<span class="no">37</span>   puts <span class="gv">$:</span>
+<span class="no">38</span>   puts <span class="co">Stuff</span>.m(<span class="i">5</span>)     <span class="c"># Stuff class methods not called from D object</span>
+</pre>
+</div>
 <div class='box'>
 <p>Remember that you can mix in more than one module in a class. However, a class cannot inherit from more than one class. Class names tend to be nouns, while module names are often adjectives.</p>
 </div>

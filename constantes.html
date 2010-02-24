@@ -32,30 +32,29 @@
    <div class="column span-15 prepend-2 first">
       <p class="title">constantes</p>
 <p>A Ruby constant is like a variable, except that its value is supposed to remain constant for the duration of the program. The Ruby interpreter does not actually enforce the constancy of constants, but it does issue a warning if a program changes the value of a constant (as shown in this trivial example) &#8211; p054constwarn.rb</p>
-<p><code class='ruby'></p>
-<ol>
-	<li>p054constwarn.rb<br />
-  A_CONST = 10<br />
-  A_CONST = 20<br />
-</code></li>
-</ol>
+<div class="CodeRay">
+<pre><span class="no">1</span>   <span class="c"># p054constwarn.rb</span>
+<span class="no">2</span>   <span class="co">A_CONST</span> = <span class="i">10</span>
+<span class="no">3</span>   <span class="co">A_CONST</span> = <span class="i">20</span>
+</pre>
+</div>
 <p>Produces a warning:</p>
-<p><code class='bash'>
-  p054constwarn.rb:3: warning: already initialized constant A_CONST
-</code></p>
+<div class="CodeRay">
+<pre><span class="no">1</span>   p054constwarn.rb:3: warning: already initialized constant A_CONST
+</pre>
+</div>
 <p>Lexically, the names of constants look like the names of local variables, except that they begin with a capital letter. By convention, most constants are written in all uppercase with underscores to separate words, LIKE_THIS. Ruby class and module names are also constants, but they are conventionally written using initial capital letters and camel case, LikeThis.</p>
 <p>Note that constants do not exist until a value is actually assigned to them.</p>
 <p>Although constants should not be changed, you can modify the internal states of the objects they reference, as seen in p055constalter.rb</p>
-<p><code class='ruby'></p>
-<ol>
-	<li>p055constalter.rb<br />
-  A_CONST = &#8220;Doshi&#8221;<br />
-  B_CONST = A_CONST<br />
-  A_CONST<sup class="footnote"><a href="#fn0">0</a></sup> = &#8220;J&#8221; # alter string referenced by constant<br />
-  puts A_CONST # displays Joshi<br />
-  puts B_CONST # also displays Joshi<br />
-</code></li>
-</ol>
+<div class="CodeRay">
+<pre><span class="no">1</span>   <span class="c"># p055constalter.rb</span>
+<span class="no">2</span>   <span class="co">A_CONST</span> = <span class="s"><span class="dl">&quot;</span><span class="k">Doshi</span><span class="dl">&quot;</span></span>
+<span class="no">3</span>   <span class="co">B_CONST</span> = <span class="co">A_CONST</span>
+<span class="no">4</span>   <span class="co">A_CONST</span>[<span class="i">0</span>] = <span class="s"><span class="dl">&quot;</span><span class="k">J</span><span class="dl">&quot;</span></span> <span class="c"># alter string referenced by constant</span>
+<span class="no">5</span>   puts <span class="co">A_CONST</span> <span class="c"># displays Joshi</span>
+<span class="no">6</span>   puts <span class="co">B_CONST</span> <span class="c"># also displays Joshi</span>
+</pre>
+</div>
 <div class='box'>
 <p>IN RAILS: You can find examples of this kind of operation (modify) in the Rails source code, where constants figure prominently and the objects they represent undergo fairly frequent changes.</p>
 </div>
@@ -68,58 +67,60 @@
 	<li>Constants may be added to existing classes and modules from the outside by using the class or module name and the scope operator before the constant name.</li>
 </ul>
 <p>The program p056const.rb shows all of this:</p>
-<p><code class='ruby'>
-  OUTER_CONST = 99</p>
-class Const
-def get_const
-CONST
-end
-CONST = OUTER_CONST + 1
-end
-puts Const.new.get_const
-puts Const::CONST
-puts ::OUTER_CONST
-puts Const::NEW_CONST = 123
-<p></code></p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span>   <span class="co">OUTER_CONST</span> = <span class="i">99</span>
+<span class="no"> 2</span> 
+<span class="no"> 3</span>   <span class="r">class</span> <span class="cl">Const</span>
+<span class="no"> 4</span>       <span class="r">def</span> <span class="fu">get_const</span>
+<span class="no"> 5</span>         <span class="co">CONST</span>
+<span class="no"> 6</span>       <span class="r">end</span>
+<span class="no"> 7</span>       <span class="co">CONST</span> = <span class="co">OUTER_CONST</span> + <span class="i">1</span>
+<span class="no"> 8</span>   <span class="r">end</span>
+<span class="no"> 9</span> 
+<span class="no"><strong>10</strong></span>   puts <span class="co">Const</span>.new.get_const
+<span class="no">11</span>   puts <span class="co">Const</span>::<span class="co">CONST</span>
+<span class="no">12</span>   puts ::<span class="co">OUTER_CONST</span>
+<span class="no">13</span>   puts <span class="co">Const</span>::<span class="co">NEW_CONST</span> = <span class="i">123</span>
+</pre>
+</div>
 <p>Another elaborate example on own methods in a class is p057mymethods2.rb In this example we shall also see how to write a class method.</p>
-<p><code class='ruby'></p>
-<ol>
-	<li>p057mymethods2.rb</li>
-	<li>variables and methods start lowercase<br />
-  $glob = 5             # global variables start with $<br />
-  class TestVar         # class name constant, start uppercase<br />
-   <code>@cla = 6            # class variables start with @</code><br />
-   CONST_VAL = 7        # constant style, all caps, underscore<br />
-   def initialize(x)    # constructor<br />
-    <code>inst = x           # instance variables start with @
-    @</code>cla += 1          # each object shares <code>@cla
-   end
-   def self.cla         # class method, getter
-    @</code>cla<br />
-   end<br />
-   def self.cla=(y)     # class method, setter, also TestVar.<br />
-    @@cla = y<br />
-   end<br />
-   def inst             # instance method, getter<br />
-    @inst<br />
-   end<br />
-   def inst=(i)         # instance method, setter<br />
-    @inst = i<br />
-   end<br />
-  end<br />
-  puts $glob<br />
-  test = TestVar.new(3) # calls constructor<br />
-  puts TestVar.cla      # calls getter<br />
-  puts test.inspect     # gives object ID and instance vars<br />
-  TestVar.cla = 4       # calls setter<br />
-  test.inst=8           # calls setter<br />
-  puts TestVar.cla<br />
-  puts test.inst        # calls getter<br />
-  other = TestVar.new(17)<br />
-  puts other.inspect<br />
-  puts TestVar.cla<br />
-</code></li>
-</ol>
+<div class="CodeRay">
+<pre><span class="no"> 1</span>   <span class="c"># p057mymethods2.rb</span>
+<span class="no"> 2</span>   <span class="c"># variables and methods start lowercase</span>
+<span class="no"> 3</span>   <span class="gv">$glob</span> = <span class="i">5</span>             <span class="c"># global variables start with $</span>
+<span class="no"> 4</span>   <span class="r">class</span> <span class="cl">TestVar</span>         <span class="c"># class name constant, start uppercase</span>
+<span class="no"> 5</span>    <span class="cv">@@cla</span> = <span class="i">6</span>            <span class="c"># class variables start with @@</span>
+<span class="no"> 6</span>    <span class="co">CONST_VAL</span> = <span class="i">7</span>        <span class="c"># constant style, all caps, underscore</span>
+<span class="no"> 7</span>    <span class="r">def</span> <span class="fu">initialize</span>(x)    <span class="c"># constructor</span>
+<span class="no"> 8</span>     <span class="iv">@inst</span> = x           <span class="c"># instance variables start with @</span>
+<span class="no"> 9</span>     <span class="cv">@@cla</span> += <span class="i">1</span>          <span class="c"># each object shares @@cla</span>
+<span class="no"><strong>10</strong></span>    <span class="r">end</span>
+<span class="no">11</span>    <span class="r">def</span> <span class="pc">self</span>.<span class="fu">cla</span>         <span class="c"># class method, getter</span>
+<span class="no">12</span>     <span class="cv">@@cla</span>
+<span class="no">13</span>    <span class="r">end</span>
+<span class="no">14</span>    <span class="r">def</span> <span class="pc">self</span>.<span class="fu">cla=</span>(y)     <span class="c"># class method, setter, also TestVar.</span>
+<span class="no">15</span>     <span class="cv">@@cla</span> = y
+<span class="no">16</span>    <span class="r">end</span>
+<span class="no">17</span>    <span class="r">def</span> <span class="fu">inst</span>             <span class="c"># instance method, getter</span>
+<span class="no">18</span>     <span class="iv">@inst</span>
+<span class="no">19</span>    <span class="r">end</span>
+<span class="no"><strong>20</strong></span>    <span class="r">def</span> <span class="fu">inst=</span>(i)         <span class="c"># instance method, setter</span>
+<span class="no">21</span>     <span class="iv">@inst</span> = i
+<span class="no">22</span>    <span class="r">end</span>
+<span class="no">23</span>   <span class="r">end</span>
+<span class="no">24</span>   puts <span class="gv">$glob</span>
+<span class="no">25</span>   test = <span class="co">TestVar</span>.new(<span class="i">3</span>) <span class="c"># calls constructor</span>
+<span class="no">26</span>   puts <span class="co">TestVar</span>.cla      <span class="c"># calls getter</span>
+<span class="no">27</span>   puts test.inspect     <span class="c"># gives object ID and instance vars</span>
+<span class="no">28</span>   <span class="co">TestVar</span>.cla = <span class="i">4</span>       <span class="c"># calls setter</span>
+<span class="no">29</span>   test.inst=<span class="i">8</span>           <span class="c"># calls setter</span>
+<span class="no"><strong>30</strong></span>   puts <span class="co">TestVar</span>.cla
+<span class="no">31</span>   puts test.inst        <span class="c"># calls getter</span>
+<span class="no">32</span>   other = <span class="co">TestVar</span>.new(<span class="i">17</span>)
+<span class="no">33</span>   puts other.inspect
+<span class="no">34</span>   puts <span class="co">TestVar</span>.cla
+</pre>
+</div>
 <h2>Summary</h2>
 <p>I have listed down all the important points you need to remember after you have completed the following topics: Object Serialization, Modules/Mixins, Self, Constants.</p>
    </div>

@@ -37,69 +37,77 @@
 </div>
 <p>If an object walks like a duck and talks like a duck, then the Ruby interpreter is happy to treat it as if it were a duck.</p>
 <p>Consider the following example.</p>
-<p><code class='ruby'></p>
-<ol>
-	<li>Check whether the object defines the to_str method<br />
-  puts (&#8216;A string&#8217;.respond_to? :to_str) # =&gt; true<br />
-  puts (Exception.new.respond_to? :to_str) # =&gt; true<br />
-  puts (4.respond_to? :to_str) # =&gt; false<br />
-</code></li>
-</ol>
+<div class="CodeRay">
+<pre><span class="no">1</span>   <span class="c"># Check whether the object defines the to_str method</span>
+<span class="no">2</span>   puts (<span class="s"><span class="dl">'</span><span class="k">A string</span><span class="dl">'</span></span>.respond_to? <span class="sy">:to_str</span>) <span class="c"># =&gt; true</span>
+<span class="no">3</span>   puts (<span class="co">Exception</span>.new.respond_to? <span class="sy">:to_str</span>) <span class="c"># =&gt; true</span>
+<span class="no">4</span>   puts (<span class="i">4</span>.respond_to? <span class="sy">:to_str</span>) <span class="c"># =&gt; false</span>
+</pre>
+</div>
 <p>The above example is the simplest example of Ruby&#8217;s philosophy of &#8220;duck typing:&#8221; if an object quacks like a duck (or acts like a string), just go ahead and treat it as a duck (or a string). Whenever possible, you should treat objects according to the methods they define rather than the classes from which they inherit or the modules they include.</p>
 <p>Now consider the following three classes &#8211; Duck, Goose and DuckRecording. Program p036duck.rb</p>
 <h2>Code</h2>
-<p><code class='ruby'>
-  class Duck
-    def quack
-      'Quack!'
-    end</p>
-def swim
-&#8216;Paddle paddle paddle&#8230;&#8217;
-end
-end
-class Goose
-def honk
-&#8216;Honk!&#8217;
-end
-def swim
-&#8216;Splash splash splash&#8230;&#8217;
-end
-end
-class DuckRecording
-def quack
-play
-end
-def play
-&#8216;Quack!&#8217;
-end
-end
-def make_it_quack(duck)
-duck.quack
-end
-puts make_it_quack(Duck.new)
-puts make_it_quack(DuckRecording.new)
-def make_it_swim(duck)
-duck.swim
-end
-puts make_it_swim(Duck.new)
-puts make_it_swim(Goose.new)
-<p></code></p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span>   <span class="r">class</span> <span class="cl">Duck</span>
+<span class="no"> 2</span>     <span class="r">def</span> <span class="fu">quack</span>
+<span class="no"> 3</span>       <span class="s"><span class="dl">'</span><span class="k">Quack!</span><span class="dl">'</span></span>
+<span class="no"> 4</span>     <span class="r">end</span>
+<span class="no"> 5</span> 
+<span class="no"> 6</span>     <span class="r">def</span> <span class="fu">swim</span>
+<span class="no"> 7</span>       <span class="s"><span class="dl">'</span><span class="k">Paddle paddle paddle...</span><span class="dl">'</span></span>
+<span class="no"> 8</span>     <span class="r">end</span>
+<span class="no"> 9</span>   <span class="r">end</span>
+<span class="no"><strong>10</strong></span> 
+<span class="no">11</span>   <span class="r">class</span> <span class="cl">Goose</span>
+<span class="no">12</span>     <span class="r">def</span> <span class="fu">honk</span>
+<span class="no">13</span>       <span class="s"><span class="dl">'</span><span class="k">Honk!</span><span class="dl">'</span></span>
+<span class="no">14</span>     <span class="r">end</span>
+<span class="no">15</span>     <span class="r">def</span> <span class="fu">swim</span>
+<span class="no">16</span>       <span class="s"><span class="dl">'</span><span class="k">Splash splash splash...</span><span class="dl">'</span></span>
+<span class="no">17</span>     <span class="r">end</span>
+<span class="no">18</span>   <span class="r">end</span>
+<span class="no">19</span> 
+<span class="no"><strong>20</strong></span>   <span class="r">class</span> <span class="cl">DuckRecording</span>
+<span class="no">21</span>     <span class="r">def</span> <span class="fu">quack</span>
+<span class="no">22</span>       play
+<span class="no">23</span>   <span class="r">end</span>
+<span class="no">24</span> 
+<span class="no">25</span>     <span class="r">def</span> <span class="fu">play</span>
+<span class="no">26</span>       <span class="s"><span class="dl">'</span><span class="k">Quack!</span><span class="dl">'</span></span>
+<span class="no">27</span>     <span class="r">end</span>
+<span class="no">28</span>   <span class="r">end</span>
+<span class="no">29</span> 
+<span class="no"><strong>30</strong></span>   <span class="r">def</span> <span class="fu">make_it_quack</span>(duck)
+<span class="no">31</span>     duck.quack
+<span class="no">32</span>   <span class="r">end</span>
+<span class="no">33</span>   puts make_it_quack(<span class="co">Duck</span>.new)
+<span class="no">34</span>   puts make_it_quack(<span class="co">DuckRecording</span>.new)
+<span class="no">35</span> 
+<span class="no">36</span>   <span class="r">def</span> <span class="fu">make_it_swim</span>(duck)
+<span class="no">37</span>     duck.swim
+<span class="no">38</span>   <span class="r">end</span>
+<span class="no">39</span>   puts make_it_swim(<span class="co">Duck</span>.new)
+<span class="no"><strong>40</strong></span>   puts make_it_swim(<span class="co">Goose</span>.new)
+</pre>
+</div>
 <p>If you refer to the code shown below:</p>
-<p><code class='ruby'>
-  def make_it_quack(duck)
-    duck.quack
-  end
-  puts make_it_quack(Duck.new)
-  puts make_it_quack(DuckRecording.new)
-</code></p>
+<div class="CodeRay">
+<pre><span class="no">1</span>   <span class="r">def</span> <span class="fu">make_it_quack</span>(duck)
+<span class="no">2</span>     duck.quack
+<span class="no">3</span>   <span class="r">end</span>
+<span class="no">4</span>   puts make_it_quack(<span class="co">Duck</span>.new)
+<span class="no">5</span>   puts make_it_quack(<span class="co">DuckRecording</span>.new)
+</pre>
+</div>
 <p>A method that told a Duck to quack works when given a DuckRecoding, due to Duck Typing. Similarly in the following code:</p>
-<p><code class='ruby'>
-  def make_it_swim(duck)
-    duck.swim
-  end
-  puts make_it_swim(Duck.new)
-  puts make_it_swim(Goose.new)
-</code></p>
+<div class="CodeRay">
+<pre><span class="no">1</span>   <span class="r">def</span> <span class="fu">make_it_swim</span>(duck)
+<span class="no">2</span>     duck.swim
+<span class="no">3</span>   <span class="r">end</span>
+<span class="no">4</span>   puts make_it_swim(<span class="co">Duck</span>.new)
+<span class="no">5</span>   puts make_it_swim(<span class="co">Goose</span>.new)
+</pre>
+</div>
 <p>A method that tells a Duck to swim when given a Goose, works.</p>
    </div>
 
