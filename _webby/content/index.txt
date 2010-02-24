@@ -113,12 +113,12 @@ h3. Parte 7
 # "Resumo 7 [en]":sumario-ruby7.html
 
 h3. Parte 8
-# Serialização de objetos
-# Módulos / Mixins
-# Self
+# "Serialização de objetos [en]":serializacao-de-objetos.html
+# "Módulos / Mixins [en]":modulos-mixins.html
+# "Self [en]":self.html
 ## Contexto do nível mais alto
 ## Self dentro de definições de classes e módulos
 ## Self na definição de métodos de instância
 ## Self na definição de métodos singleton e métodos de classe
-# Constantes
-# Resumo 8
+# "Constantes [en]":constantes.html
+# "Resumo 8 [en]":sumario-ruby8.html
