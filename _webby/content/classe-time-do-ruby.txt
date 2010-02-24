@@ -1,0 +1,49 @@
+---
+title:      classe time do ruby
+created_at: 2009-12-23 14:29:25.387994 -02:00
+filter:
+ - erb
+ - textile
+---
+p(title). <%= h(@page.title) %>
+
+The Time class in Ruby has a powerful formatting function which can help you represent the time in a variety of ways. The Time class contains Ruby's interface to the set of time libraries written in C. Time zero for Ruby is the first second GMT of January 1, 1970. Ruby's DateTime class is superior to Time for astronomical and historical applications, but you can use Time  for most everyday programs.
+
+The strftime function is modelled after C's printf. The p042time.rb program shows some of these functions.
+
+<code class='ruby'>
+  t = Time.now
+  # to get day, month and year with century
+  # also hour, minute and second
+  puts t.strftime("%d/%m/%Y %H:%M:%S")
+
+  # You can use the upper case A and B to get the full
+  # name of the weekday and month, respectively
+  puts t.strftime("%A")
+  puts t.strftime("%B")
+
+  # You can use the lower case a and b to get the abbreviated
+  # name of the weekday and month, respectively
+  puts t.strftime("%a")
+  puts t.strftime("%b")
+
+  # 24 hour clock and Time zone name
+  puts t.strftime("at %H:%M %Z")
+</code>
+
+The output is:
+
+<code class='bash'>
+  >ruby p042time.rb
+  10/09/2006 10:06:31
+  Sunday
+  September
+  Sun
+  Sep
+  at 10:06 India Standard Time
+  >Exit code: 0
+</code>
+
+h2. Summary
+
+I have listed down all the important points you need to remember after you have completed the following topics: Access Control, Exceptions, Logging, Ruby Time class.

@@ -1,0 +1,235 @@
+---
+title:      controle de acesso
+created_at: 2009-12-23 14:29:25.387994 -02:00
+filter:
+ - erb
+ - textile
+---
+p(title). <%= h(@page.title) %>
+
+The only easy way to change an object's state in Ruby is by calling one of its methods. Control access to the methods, and you have controlled access to the object. A good rule of the thumb is never to expose methods that could leave an object in an invalid state.
+
+Ruby gives you three levels of protection:
+
+# Public methods can be called by everyone - no access control is enforced. A class's instance methods (these do not belong only to one object; instead, every instance of the class can call them) are public by default; anyone can call them. The initialize method is always private.
+# Protected methods can be invoked only by objects of the defining class and its subclasses. Access is kept within the family. However, usage of protected is limited.
+# Private methods cannot be called with an explicit receiver - the receiver is always self. This means that private methods can be called only in the context of the current object; you cannot invoke another object's private methods.
+
+Access control is determined dynamically, as the program runs, not statically. You will get an access violation only when the code attempts to execute the restricted method. Let us refer to the program p047classaccess.rb below:
+
+<code class='ruby'>
+  # p047classaccess.rb
+  class ClassAccess
+    def m1          # this method is public
+    end
+    protected
+      def m2        # this method is protected
+      end
+    private
+      def m3        # this method is private
+      end
+  end
+  ca = ClassAccess.new
+  ca.m1
+  #ca.m2
+  #ca.m3
+</code>
+
+If you remove the comments of the last two statements in the above program, you will get an access violation runtime error.
+
+Alternatively, you can set access levels of named methods by listing them as arguments to the access control functions.
+
+<code class='ruby'>
+  class ClassAccess
+    def m1       # this method is public
+    end
+    public :m1
+    protected :m2, :m3
+    private :m4, :m5
+  end
+
+</code>
+
+Here is an example (p047zclassaccess.rb) for 'protected' access control:
+
+<code class='ruby'>
+  # p047zclassaccess.rb
+  class Person
+    def initialize(age)
+      @age = age
+    end
+    def age
+      @age
+    end
+    def compare_age(c)
+      if c.age > age
+        "The other object's age is bigger."
+      else
+        "The other object's age is the same or smaller."
+      end
+    end
+    protected :age
+  end
+
+  chris = Person.new(25)
+  marcos = Person.new(34)
+  puts chris.compare_age(marcos)
+  #puts chris.age
+</code>
+
+
+The output is:
+
+<code class='bash'>
+  >ruby p047zclassaccess.rb
+  The other object's age is bigger.
+  >Exit code: 0
+</code>
+
+
+In the preceding example, we compare one Person instance with another Person instance. The comparison, however, depends on the result of a call to the method age. The object doing the comparing (chris, in the example) has to ask the other object (marcos) to execute its age method. So, age can't be private.
+
+That's where the protected level comes in. With age protected rather than private, chris can ask marcos to execute age, because chris and marcos are both instances of the same class. But if you try to call the age method of a Person object when self is anything other than a Person object, the method will fail.
+
+A protected method is thus like a private method, but with an exemption for cases where the class of self (chris) and the class of the object having the method called on it (marcos) are the same.
+
+Note that if you remove the comment from the last statement in the program ie. when you use age directly, Ruby throws an exception.
+
+<div class='box'>
+In Ruby, public, private and protected apply only to methods. Instance and class variables are encapsulated and effectively private, and constants are effectively public. There is no way to make an instance variable accessible from outside a class (except by defining an accessor method). And there is no way to define a constant that is inaccessible to outside use.
+</div>
+
+h2. Overriding private methods
+
+Private methods cannot be invoked from outside the class that defines them. But they are inherited by subclasses. This means that subclasses can invoke them and can override them.
+
+<div class='box'>
+Classes often use private methods as internal helper methods. They are not part of the public API of the class and are not intended to be visible. If you happen to define a method in your subclass that has the same name as a private method in the superclass, you will have inadvertently overridden the superclass's internal utility method, and this will almost certainly cause unintended behavior.
+</div>
+
+h2. Accessor methods
+
+Encapsulation is achieved when the instance variables are private to an object and you have public getters and setters (in Ruby, we call them attribute readers and attribute writers). To make instance variables available, Ruby provides accessor methods that return their values. The program p048accessor.rb illustrates the same.
+
+<code class='ruby'>
+  # p048accessor.rb
+  # First without accessor methods
+  class Song
+    def initialize(name, artist)
+      @name     = name
+      @artist   = artist
+    end
+    def name
+      @name
+    end
+    def artist
+      @artist
+    end
+  end
+
+  song = Song.new("Brazil", "Ivete Sangalo")
+  puts song.name
+  puts song.artist
+
+  # Now, with accessor methods
+  class Song
+    def initialize(name, artist)
+      @name     = name
+      @artist   = artist
+    end
+    attr_reader :name, :artist  # create reader only
+    # For creating reader and writer methods
+    # attr_accessor :name
+    # For creating writer methods
+    # attr_writer :name
+
+  end
+
+  song = Song.new("Brazil", "Ivete Sangalo")
+  puts song.name
+  puts song.artist
+</code>
+
+h3. Are instance variables inherited by a sub-class?
+
+David Black, the author of Ruby for Rails, has this to say: Instance variables are per-object, not per-class, and they're not inherited. But if a method uses one, and that method is available to subclasses, then it will still use the variable -- but "the variable" in the sense of one per object. See the following program - p049instvarinherit.rb:
+
+<code class='ruby'>
+  # p049instvarinherit.rb
+  class C
+    def initialize
+      @n = 100
+    end
+
+    def increase_n
+      @n *= 20
+    end
+  end
+
+  class D < C
+    def show_n
+      puts "n is #{@n}"
+    end
+  end
+
+  d = D.new
+  d.increase_n
+  d.show_n
+</code>
+
+
+The output is:
+
+<code class='ruby'>
+  >ruby p049instvarinherit.rb
+  n is 2000
+  >Exit code: 0
+</code>
+
+
+The @n in D's methods is the same (for each instance) as the one in C.
+
+<div class='box'>
+All Ruby objects have a set of instance variables. These are not defined by the object's class - they are simply created when a value is assigned to them. Because instance variables are not defined by a class, they are unrelated to subclassing and the inheritance mechanism.
+</div>
+
+h2. Top-level methods
+
+When you write code at the top level, Ruby provides you automatically with a default self. This object is a direct instance of Object. When you ask it to describe itself:
+
+<code class='ruby'>
+  puts self
+</code>
+
+
+it says:
+
+<code class='ruby'>
+  main
+</code>
+
+
+The object main is the current object as soon as your program starts up.
+
+Suppose you define a method at the top level:
+
+<code class='ruby'>
+  def talk
+    puts "Hello"
+  end
+</code>
+
+
+Who, or what, does the method belong to? It's not inside a class or module definition block, so it doesn't appear to be an instance method of a class or module. It's not attached to any particular object (as in def obj.talk). What is it? Top-level methods are private instance methods of the Kernel module.
+
+Because top-level methods are private, you can't call them with an explicit receiver; you can only call them by using the implied receiver, self. That means self must be an object on whose method search path the given top-level method lies. But every object's search path includes the Kernel module, because the class Object mixes in Kernel, and every object's class has Object as an ancestor. That means you can always call any top-level method, wherever you are in your program. It also means you can never use an explicit receiver on a top-level method.
+
+From our earliest examples onward, we've been making bareword-style calls to puts and print, like this one:
+
+<code class='ruby'>
+  puts 'Hello'
+</code>
+
+puts and print are built-in private instance methods of Kernel. That's why you can - indeed, must - call them without a receiver.
+
+We shall talk about self in more details, later.

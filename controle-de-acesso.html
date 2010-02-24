@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>controle de acesso</title>
+   <meta name="author" content="" />
+
+   <!--- Blueprint CSS Framework -->
+   <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection">
+   <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print">
+   <!--[if IE]>
+      <link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection">
+   <![endif]-->
+
+   <!-- CodeRay syntax highlighting CSS -->
+   <link rel="stylesheet" href="css/coderay.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="css/site.css" type="text/css" media="screen, projection" />
+</head>
+<body>
+
+<div class="container">
+
+   <div class="column span-20 prepend-2 append-2 first last" id="header">
+     <p class="title">Tutorial de Ruby do GURU-SP</p>
+     <hr>
+   </div>
+
+   <div class="column span-15 prepend-2 first">
+      <p class="title">controle de acesso</p>
+<p>The only easy way to change an object&#8217;s state in Ruby is by calling one of its methods. Control access to the methods, and you have controlled access to the object. A good rule of the thumb is never to expose methods that could leave an object in an invalid state.</p>
+<p>Ruby gives you three levels of protection:</p>
+<ol>
+	<li>Public methods can be called by everyone &#8211; no access control is enforced. A class&#8217;s instance methods (these do not belong only to one object; instead, every instance of the class can call them) are public by default; anyone can call them. The initialize method is always private.</li>
+	<li>Protected methods can be invoked only by objects of the defining class and its subclasses. Access is kept within the family. However, usage of protected is limited.</li>
+	<li>Private methods cannot be called with an explicit receiver &#8211; the receiver is always self. This means that private methods can be called only in the context of the current object; you cannot invoke another object&#8217;s private methods.</li>
+</ol>
+<p>Access control is determined dynamically, as the program runs, not statically. You will get an access violation only when the code attempts to execute the restricted method. Let us refer to the program p047classaccess.rb below:</p>
+<p><code class='ruby'></p>
+<ol>
+	<li>p047classaccess.rb<br />
+  class ClassAccess<br />
+    def m1          # this method is public<br />
+    end<br />
+    protected<br />
+      def m2        # this method is protected<br />
+      end<br />
+    private<br />
+      def m3        # this method is private<br />
+      end<br />
+  end<br />
+  ca = ClassAccess.new<br />
+  ca.m1<br />
+  #ca.m2<br />
+  #ca.m3<br />
+</code></li>
+</ol>
+<p>If you remove the comments of the last two statements in the above program, you will get an access violation runtime error.</p>
+<p>Alternatively, you can set access levels of named methods by listing them as arguments to the access control functions.</p>
+<p><code class='ruby'>
+  class ClassAccess
+    def m1       # this method is public
+    end
+    public :m1
+    protected :m2, :m3
+    private :m4, :m5
+  end</p>
+<p></code></p>
+<p>Here is an example (p047zclassaccess.rb) for &#8216;protected&#8217; access control:</p>
+<p><code class='ruby'></p>
+<ol>
+	<li>p047zclassaccess.rb<br />
+  class Person<br />
+    def initialize(age)<br />
+      @age = age<br />
+    end<br />
+    def age<br />
+      @age<br />
+    end<br />
+    def compare_age&#169;<br />
+      if c.age &gt; age<br />
+        &#8220;The other object&#8217;s age is bigger.&#8221;<br />
+      else<br />
+        &#8220;The other object&#8217;s age is the same or smaller.&#8221;<br />
+      end<br />
+    end<br />
+    protected :age<br />
+  end</li>
+</ol>
+chris = Person.new(25)
+marcos = Person.new(34)
+puts chris.compare_age(marcos)
+#puts chris.age
+<p></code></p>
+<p>The output is:</p>
+<p><code class='bash'>
+  &gt;ruby p047zclassaccess.rb
+  The other object's age is bigger.
+  &gt;Exit code: 0
+</code></p>
+<p>In the preceding example, we compare one Person instance with another Person instance. The comparison, however, depends on the result of a call to the method age. The object doing the comparing (chris, in the example) has to ask the other object (marcos) to execute its age method. So, age can&#8217;t be private.</p>
+<p>That&#8217;s where the protected level comes in. With age protected rather than private, chris can ask marcos to execute age, because chris and marcos are both instances of the same class. But if you try to call the age method of a Person object when self is anything other than a Person object, the method will fail.</p>
+<p>A protected method is thus like a private method, but with an exemption for cases where the class of self (chris) and the class of the object having the method called on it (marcos) are the same.</p>
+<p>Note that if you remove the comment from the last statement in the program ie. when you use age directly, Ruby throws an exception.</p>
+<div class='box'>
+<p>In Ruby, public, private and protected apply only to methods. Instance and class variables are encapsulated and effectively private, and constants are effectively public. There is no way to make an instance variable accessible from outside a class (except by defining an accessor method). And there is no way to define a constant that is inaccessible to outside use.</p>
+</div>
+<h2>Overriding private methods</h2>
+<p>Private methods cannot be invoked from outside the class that defines them. But they are inherited by subclasses. This means that subclasses can invoke them and can override them.</p>
+<div class='box'>
+<p>Classes often use private methods as internal helper methods. They are not part of the public API of the class and are not intended to be visible. If you happen to define a method in your subclass that has the same name as a private method in the superclass, you will have inadvertently overridden the superclass&#8217;s internal utility method, and this will almost certainly cause unintended behavior.</p>
+</div>
+<h2>Accessor methods</h2>
+<p>Encapsulation is achieved when the instance variables are private to an object and you have public getters and setters (in Ruby, we call them attribute readers and attribute writers). To make instance variables available, Ruby provides accessor methods that return their values. The program p048accessor.rb illustrates the same.</p>
+<p><code class='ruby'></p>
+<ol>
+	<li>p048accessor.rb</li>
+	<li>First without accessor methods<br />
+  class Song<br />
+    def initialize(name, artist)<br />
+      @name     = name<br />
+      @artist   = artist<br />
+    end<br />
+    def name<br />
+      @name<br />
+    end<br />
+    def artist<br />
+      @artist<br />
+    end<br />
+  end</li>
+</ol>
+song = Song.new(&#8220;Brazil&#8221;, &#8220;Ivete Sangalo&#8221;)
+puts song.name
+puts song.artist
+<ol>
+	<li>Now, with accessor methods<br />
+  class Song<br />
+    def initialize(name, artist)<br />
+      @name     = name<br />
+      @artist   = artist<br />
+    end<br />
+    attr_reader :name, :artist  # create reader only</li>
+	<li>For creating reader and writer methods</li>
+	<li>attr_accessor :name</li>
+	<li>For creating writer methods</li>
+	<li>attr_writer :name</li>
+</ol>
+end
+song = Song.new(&#8220;Brazil&#8221;, &#8220;Ivete Sangalo&#8221;)
+puts song.name
+puts song.artist
+<p></code></p>
+<h3>Are instance variables inherited by a sub-class?</h3>
+<p>David Black, the author of Ruby for Rails, has this to say: Instance variables are per-object, not per-class, and they&#8217;re not inherited. But if a method uses one, and that method is available to subclasses, then it will still use the variable &#8212; but &#8220;the variable&#8221; in the sense of one per object. See the following program &#8211; p049instvarinherit.rb:</p>
+<p><code class='ruby'></p>
+<ol>
+	<li>p049instvarinherit.rb<br />
+  class C<br />
+    def initialize<br />
+      @n = 100<br />
+    end</li>
+</ol>
+def increase_n
+@n *= 20
+end
+end
+class D &lt; C
+def show_n
+puts &#8220;n is #{@n}&#8221;
+end
+end
+d = D.new
+d.increase_n
+d.show_n
+<p></code></p>
+<p>The output is:</p>
+<p><code class='ruby'>
+  &gt;ruby p049instvarinherit.rb
+  n is 2000
+  &gt;Exit code: 0
+</code></p>
+<p>The @n in D&#8217;s methods is the same (for each instance) as the one in C.</p>
+<div class='box'>
+<p>All Ruby objects have a set of instance variables. These are not defined by the object&#8217;s class &#8211; they are simply created when a value is assigned to them. Because instance variables are not defined by a class, they are unrelated to subclassing and the inheritance mechanism.</p>
+</div>
+<h2>Top-level methods</h2>
+<p>When you write code at the top level, Ruby provides you automatically with a default self. This object is a direct instance of Object. When you ask it to describe itself:</p>
+<p><code class='ruby'>
+  puts self
+</code></p>
+<p>it says:</p>
+<p><code class='ruby'>
+  main
+</code></p>
+<p>The object main is the current object as soon as your program starts up.</p>
+<p>Suppose you define a method at the top level:</p>
+<p><code class='ruby'>
+  def talk
+    puts "Hello"
+  end
+</code></p>
+<p>Who, or what, does the method belong to? It&#8217;s not inside a class or module definition block, so it doesn&#8217;t appear to be an instance method of a class or module. It&#8217;s not attached to any particular object (as in def obj.talk). What is it? Top-level methods are private instance methods of the Kernel module.</p>
+<p>Because top-level methods are private, you can&#8217;t call them with an explicit receiver; you can only call them by using the implied receiver, self. That means self must be an object on whose method search path the given top-level method lies. But every object&#8217;s search path includes the Kernel module, because the class Object mixes in Kernel, and every object&#8217;s class has Object as an ancestor. That means you can always call any top-level method, wherever you are in your program. It also means you can never use an explicit receiver on a top-level method.</p>
+<p>From our earliest examples onward, we&#8217;ve been making bareword-style calls to puts and print, like this one:</p>
+<p><code class='ruby'>
+  puts 'Hello'
+</code></p>
+<p>puts and print are built-in private instance methods of Kernel. That&#8217;s why you can &#8211; indeed, must &#8211; call them without a receiver.</p>
+<p>We shall talk about self in more details, later.</p>
+   </div>
+
+   <div class="column span-5 append-2 last">
+
+      <p><a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP"><img src="images/logo_guru-sp.jpg" title="Logo do GURU-SP" alt="Logo do Guru-SP" /></a></p>
+
+      <div class="box">
+         <p>Este material tem como base o <a href="http://www.rubylearning.com" title="Ruby Learning">tutorial do RubyLearning.com de Satish Talim</a> e foi traduzido por membros do <a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP">GURU-SP</a> com a permissão do autor.</p>
+        <p class="last">Ajude o RubyLearning participando em algum dos <a href="http://www.rubylearning.org" title="cursos do Ruby Learning">cursos pagos</a> ou <a href="http://pledgie.com/campaigns/415" title="Ajude o Ruby Learning">fazendo uma doação para o projeto</a></p>
+      </div>
+
+      <p class="quiet"><a href="index.html" title="índice">Voltar para o índice</a></p>
+
+      <h5></h5>
+      <p class="incr"></p>
+   </div>
+
+   <div class="column span-20 prepend-2 append-2 first last" id="footer">
+     <hr />
+     <p>Tuturial de Ruby do <a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP">GURU-SP</a>. Este site foi criado com <a href="http://webby.rubyforge.org">Webby</a></p>
+   </div>
+
+</div>
+</body>
+</html>

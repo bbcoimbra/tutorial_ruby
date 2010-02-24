@@ -53,20 +53,20 @@ h3. Parte 3
 # "Resumo 3":sumario-ruby3.html
 
 h3. Parte 4
-# Arrays em Ruby
+# "Arrays em Ruby [en]":arrays-em-ruby.html
 ## Atribuição paralela
 ## Variáveis de ambiente
 ## Argumentos de linha de comando
 ## Biblioteca GetoptLong
-# Ranges (intervalos)
-# Símbolos em Ruby
-# Hashes
+# "Ranges (intervalos) [en]":ranges.html
+# "Símbolos em Ruby [en]":simbolos-em-ruby.html
+# "Hashes [en]":hashes.html
 ## Usando símbolos como chaves hash
-# Números aleatórios
-# Ler/escrever arquivos
+# "Números aleatórios [en]":numeros-aleatorios.html
+# "Ler/escrever arquivos [en]":ler-escrever-arquivos.html
 ## Varrendo árvores de diretórios
 ## Acesso aleatório
-# Resumo 4
+# "Resumo 4":sumario-ruby4.html
 
 h3. Parte 5
 # "Expressões Regulares":expressoes-regulares.html
@@ -79,30 +79,30 @@ h3. Parte 5
 ## Coletor de Lixo (Garbage Collection)
 ## Métodos de Classe
 # "Ruby method missing (método faltando)":ruby-method-missing.html
-# Procs em Ruby
-# Incluindo Outros Arquivos
-# Classes Abertas do Ruby
-# Herança
+# "Procs em Ruby [en]":procs-em-ruby.html
+# "Incluindo Outros Arquivos [en]":incluindo-outros-arquivos.html
+# "Classes Abertas do Ruby [en]":classes-abertas-em-ruby.html
+# "Herança [en]":heranca.html
 ## Herança e variáveis de classe
-# Sobreposição (Overriding) de Métodos
+# "Sobreposição (Overriding) de Métodos [en]":sobreposicao-de-metodos.html
 ## Uso do super
 ## Redefinindo métodos
 ## Classe abstrata
-# Métodos de Sobrecarga em Ruby
-# Resumo 5
+# "Métodos de Sobrecarga em Ruby [en]":metodos-de-sobrecarga-em-ruby.html
+# "Resumo 5 [en]":sumario-ruby5.html
 
 h3. Parte 6
-# Controle de Acesso
+# "Controle de Acesso [en]":controle-de-acesso.html
 ## Sobrepondo métodos privados
 ## Métodos de nível mais alto
 ## Variáveis de instância são herdadas por uma sub-classe?
-# Exceções
+# "Exceções [en]":excecoes.html
 ## Lançando uma exceção
 ## Tratando uma exceção
 ## Exemplo de validação
-# Logging com Ruby
-# A classe Time do Ruby
-# Resumo 6
+# "Logging com Ruby [en]":logging-com-ruby.html
+# "A classe Time do Ruby [en]":classe-time-do-ruby.html
+# "Resumo 6 [en]":sumario-ruby6.html
 
 h3. Parte 7
 # Duck Typing
