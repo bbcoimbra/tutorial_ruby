@@ -105,12 +105,12 @@ h3. Parte 6
 # "Resumo 6 [en]":sumario-ruby6.html
 
 h3. Parte 7
-# Duck Typing
-# Açúcares sintáticos do Ruby
-# Objetos mutáveis e imutáveis
+# "Duck Typing [en]":duck-typing.html
+# "Açúcares sintáticos do Ruby [en]":acucares-sintaticos-do-ruby.html
+# "Objetos mutáveis e imutáveis [en]":objetos-mutaveis-e-imutaveis.html
 ## Congelando objetos
 ## Frozen? (congelado)
-# Resumo 7
+# "Resumo 7 [en]":sumario-ruby7.html
 
 h3. Parte 8
 # Serialização de objetos

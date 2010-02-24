@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>acucares sintaticos do ruby</title>
+   <meta name="author" content="" />
+
+   <!--- Blueprint CSS Framework -->
+   <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection">
+   <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print">
+   <!--[if IE]>
+      <link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection">
+   <![endif]-->
+
+   <!-- CodeRay syntax highlighting CSS -->
+   <link rel="stylesheet" href="css/coderay.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="css/site.css" type="text/css" media="screen, projection" />
+</head>
+<body>
+
+<div class="container">
+
+   <div class="column span-20 prepend-2 append-2 first last" id="header">
+     <p class="title">Tutorial de Ruby do GURU-SP</p>
+     <hr>
+   </div>
+
+   <div class="column span-15 prepend-2 first">
+      <p class="title">acucares sintaticos do ruby</p>
+<p>Programmers use the term syntactic sugar to refer to special rules that let you write your code in a way that doesn&#8217;t correspond to the normal rules but that is easier to remember how to do and looks better.</p>
+<p>Let us say we want to set the name of a dog. As a starting point, name can be set along with everything else at object creation time, as in the example below.</p>
+<p><code class='ruby'>
+  class NewDog
+    def initialize(breed, name)
+      @breed = breed
+      @name = name
+    end
+    attr_reader :breed, :name   # create reader only
+  end
+  nd = NewDog.new('Doberman', 'Benzy')
+  puts nd.name
+</code></p>
+<p>Let&#8217;s write a set_name method that allows us to set, or reset, the name of an existing dog. We&#8217;ll also rewrite the initialize method so that it doesn&#8217;t expect a name:</p>
+<p><code class='ruby'>
+  class NewDog
+    def initialize(breed)
+      @breed = breed
+    end
+    attr_reader :breed, :name   # create reader only</p>
+<ol>
+	<li>setter method<br />
+    def set_name(nm)<br />
+      @name = nm<br />
+    end<br />
+  end<br />
+  nd = NewDog.new(&#8216;Doberman&#8217;)<br />
+  nd.set_name(&#8216;Benzy&#8217;)<br />
+  puts nd.name<br />
+</code></li>
+</ol>
+<p>Ruby allows you to define methods that end with an equal sign (=). Let&#8217;s replace set_name with a method called name=</p>
+<p><code class='ruby'>
+  def name=(nm)
+    @name = nm
+  end
+</code></p>
+<p>name= does exactly what set_name did, and in spite of the slightly odd method name, you can call it just like any other method:</p>
+<p><code class='ruby'>
+  nd.name=('Benzy')
+</code></p>
+<p>Here&#8217;s the modified example &#8211; p050newdog.rb</p>
+<p><code class='ruby'>
+  class NewDog
+    def initialize(breed)
+      @breed = breed
+    end
+    attr_reader :breed, :name # create reader only</p>
+<ol>
+	<li>setter method<br />
+    def name=(nm)<br />
+      @name = nm<br />
+    end<br />
+  end</li>
+</ol>
+nd = NewDog.new(&#8216;Doberman&#8217;)
+#nd.name=(&#8216;Benzy&#8217;)
+nd.name = &#8216;Benzy&#8217;
+puts nd.name
+<p></code></p>
+<p>The equal sign gives you that familiar &#8220;assigning a value to something&#8221; feeling, so you know you&#8217;re dealing with a setter method. It still looks odd, but Ruby takes care of that, too.</p>
+<p>Ruby gives you some syntactic sugar for calling setter methods. Instead of this:</p>
+<p><code class='ruby'>
+  nd.name=('Benzy')
+</code></p>
+<p>you&#8217;re allowed to do this:</p>
+<p><code class='ruby'>
+  nd.name = 'Benzy'
+</code></p>
+<p>When the interpreter sees the message &#8220;name&#8221; followed by &quot; =&quot;, it automatically ignores the space before equal sign and reads the single message &#8220;name=&#8221; &#8211; a call to the method whose name is name=, which we&#8217;ve defined. As for the right-hand side: parentheses are optional on single arguments to methods, so you can just put &#8216;Benzy&#8217; there and it will be picked up as the argument to the name= method.</p>
+<div class='box'>
+<p>IN RAILS: Method calls using the equal-sign syntax are common in Rails applications.</p>
+</div>
+   </div>
+
+   <div class="column span-5 append-2 last">
+
+      <p><a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP"><img src="images/logo_guru-sp.jpg" title="Logo do GURU-SP" alt="Logo do Guru-SP" /></a></p>
+
+      <div class="box">
+         <p>Este material tem como base o <a href="http://www.rubylearning.com" title="Ruby Learning">tutorial do RubyLearning.com de Satish Talim</a> e foi traduzido por membros do <a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP">GURU-SP</a> com a permissão do autor.</p>
+        <p class="last">Ajude o RubyLearning participando em algum dos <a href="http://www.rubylearning.org" title="cursos do Ruby Learning">cursos pagos</a> ou <a href="http://pledgie.com/campaigns/415" title="Ajude o Ruby Learning">fazendo uma doação para o projeto</a></p>
+      </div>
+
+      <p class="quiet"><a href="index.html" title="índice">Voltar para o índice</a></p>
+
+      <h5></h5>
+      <p class="incr"></p>
+   </div>
+
+   <div class="column span-20 prepend-2 append-2 first last" id="footer">
+     <hr />
+     <p>Tuturial de Ruby do <a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP">GURU-SP</a>. Este site foi criado com <a href="http://webby.rubyforge.org">Webby</a></p>
+   </div>
+
+</div>
+</body>
+</html>
