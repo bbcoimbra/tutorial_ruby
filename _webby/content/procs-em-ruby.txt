@@ -1,0 +1,84 @@
+---
+title:      Procs em Ruby
+created_at: 2009-12-23 14:29:25.387994 -02:00
+filter:
+ - erb
+ - textile
+---
+p(title). <%= h(@page.title) %>
+
+Blocks are not objects, but they can be converted into objects of class Proc. This can be done by calling the lambda  method of the module Kernel. A block created with lambda  acts like a Ruby method. If you don't specify the right number of arguments, you can't call the block.
+
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
+  prc = lambda {"hello"}
+<% end -%>
+
+Proc objects are blocks of code that have been bound to a set of local variables. The class Proc has a method call that invokes the block. The program p024proccall.rb illustrates this.
+
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
+  # Blocks are not objects
+  # they can be converted into objects of class Proc by calling lambda method
+  prc = lambda {puts 'Hello'}
+  # method call invokes the block
+  prc.call
+
+  # another example
+  toast = lambda do
+    puts 'Cheers'
+  end
+  toast.call
+<% end -%>
+
+The output is:
+
+<% coderay(:lang => "bash", :line_numbers => "inline") do -%>
+>ruby p024proccall.rb
+Hello
+Cheers
+>Exit code: 0
+<% end -%>
+
+Remember you cannot pass methods into other methods (but you can pass procs into methods), and methods cannot return other methods (but they can return procs).
+
+The next example shows how methods can take procs. Example p025mtdproc.rb
+
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
+  =begin
+    You cannot pass methods into other methods (but you can pass procs into methods),
+    and methods cannot return other methods (but they can return procs)
+  =end
+
+  def some_mtd some_proc
+    puts 'Start of mtd'
+    some_proc.call
+    puts 'End of mtd'
+  end
+
+  say = lambda do
+    puts 'Hello'
+  end
+
+  some_mtd say
+<% end -%>
+
+The output is:
+
+<% coderay(:lang => "bash", :line_numbers => "inline") do -%>
+   1. >ruby p025mtdproc.rb
+   2. Start of mtd
+   3. Hello
+   4. End of mtd
+   5. >Exit code: 0
+<% end -%>
+
+Here's another example of passing arguments using lambda.
+
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
+   1. aBlock = lambda { |x| puts x }
+   2. aBlock.call 'Hello World!'
+   3. # output is: Hello World!
+<% end -%>
+
+<div class=box>
+Fabio Akita a Brazilian Rails enthusiast, also known online as "AkitaOnRails", wrote this exclusive article on "Ruby Blocks/Closures":http://rubylearning.com/blog/2007/11/30/akitaonrails-on-anatomy-of-ruby-blocksclosures/ for the rubylearning.com members like you. Do read, after you have gone through this lesson.
+</div>

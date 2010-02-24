@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>Heranca</title>
+   <meta name="author" content="" />
+
+   <!--- Blueprint CSS Framework -->
+   <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection">
+   <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print">
+   <!--[if IE]>
+      <link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection">
+   <![endif]-->
+
+   <!-- CodeRay syntax highlighting CSS -->
+   <link rel="stylesheet" href="css/coderay.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="css/site.css" type="text/css" media="screen, projection" />
+</head>
+<body>
+
+<div class="container">
+
+   <div class="column span-20 prepend-2 append-2 first last" id="header">
+     <p class="title">Tutorial de Ruby do GURU-SP</p>
+     <hr>
+   </div>
+
+   <div class="column span-15 prepend-2 first">
+      <p class="title">Heranca</p>
+<p>Inheritance is a relation between two classes. We know that all cats are mammals, and all mammals are animals. The benefit of inheritance is that classes lower down the hierarchy get the features of those higher up, but can also add specific features of their own. If all mammals breathe, then all cats breathe. In Ruby, a class can only inherit from a single other class. Some other languages support multiple inheritance, a feature that allows classes to inherit features from multiple classes, but Ruby doesn&#8217;t support this.</p>
+<p>We can express this concept in Ruby &#8211; see the p033mammal.rb program below:</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span>   <span class="r">class</span> <span class="cl">Mammal</span>
+<span class="no"> 2</span>     <span class="r">def</span> <span class="fu">breathe</span>
+<span class="no"> 3</span>       puts <span class="s"><span class="dl">&quot;</span><span class="k">inhale and exhale</span><span class="dl">&quot;</span></span>
+<span class="no"> 4</span>     <span class="r">end</span>
+<span class="no"> 5</span>   <span class="r">end</span>
+<span class="no"> 6</span> 
+<span class="no"> 7</span>   <span class="r">class</span> <span class="cl">Cat</span> &lt; <span class="co">Mammal</span>
+<span class="no"> 8</span>     <span class="r">def</span> <span class="fu">speak</span>
+<span class="no"> 9</span>       puts <span class="s"><span class="dl">&quot;</span><span class="k">Meow</span><span class="dl">&quot;</span></span>
+<span class="no"><strong>10</strong></span>     <span class="r">end</span>
+<span class="no">11</span>   <span class="r">end</span>
+<span class="no">12</span> 
+<span class="no">13</span>   rani = <span class="co">Cat</span>.new
+<span class="no">14</span>   rani.breathe
+<span class="no">15</span>   rani.speak
+</pre>
+</div>
+<p>Though we didn&#8217;t specify how a Cat should breathe, every cat will inherit that behaviour from the Mammal class since Cat was defined as a subclass of Mammal. (In OO terminology, the smaller class is a subclass and the larger class is a super-class. The subclass is sometimes also known as a derived or child class and the super-class as base or parent class). Hence from a programmer&#8217;s standpoint, cats get the ability to breathe for free; after we add a speak method, our cats can both breathe and speak.</p>
+<p>There will be situations where certain properties of the super-class should not be inherited by a particular subclass. Though birds generally know how to fly, penguins are a flightless subclass of birds. In the example p034bird.rb below, we override fly in class Penguin:</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span>   <span class="r">class</span> <span class="cl">Bird</span>
+<span class="no"> 2</span>     <span class="r">def</span> <span class="fu">preen</span>
+<span class="no"> 3</span>       puts <span class="s"><span class="dl">&quot;</span><span class="k">I am cleaning my feathers.</span><span class="dl">&quot;</span></span>
+<span class="no"> 4</span>     <span class="r">end</span>
+<span class="no"> 5</span>     <span class="r">def</span> <span class="fu">fly</span>
+<span class="no"> 6</span>       puts <span class="s"><span class="dl">&quot;</span><span class="k">I am flying.</span><span class="dl">&quot;</span></span>
+<span class="no"> 7</span>     <span class="r">end</span>
+<span class="no"> 8</span>   <span class="r">end</span>
+<span class="no"> 9</span> 
+<span class="no"><strong>10</strong></span>   <span class="r">class</span> <span class="cl">Penguin</span> &lt; <span class="co">Bird</span>
+<span class="no">11</span>     <span class="r">def</span> <span class="fu">fly</span>
+<span class="no">12</span>       puts <span class="s"><span class="dl">&quot;</span><span class="k">Sorry. I'd rather swim.</span><span class="dl">&quot;</span></span>
+<span class="no">13</span>     <span class="r">end</span>
+<span class="no">14</span>   <span class="r">end</span>
+<span class="no">15</span> 
+<span class="no">16</span>   p = <span class="co">Penguin</span>.new
+<span class="no">17</span>   p.preen
+<span class="no">18</span>   p.fly
+</pre>
+</div>
+<p>Rather than exhaustively define every characteristic of every new class, we need only to append or to redefine the differences between each subclass and its super-class. This use of inheritance is sometimes called differential programming. It is one of the benefits of object-oriented programming.</p>
+<p>The above two programs are taken from the online <a href="http://www.rubyist.net/%7Eslagell/ruby/inheritance.html">Ruby User&#8217;s Guide</a>.</p>
+<p>Thus, Inheritance allows you to create a class that is a refinement or specialization of another class. Inheritance is indicated with &lt;.</p>
+<p>Here&#8217;s another example, p035inherit.rb</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span>   <span class="r">class</span> <span class="cl">GF</span>
+<span class="no"> 2</span>     <span class="iv">@m</span> =<span class="i">10</span>
+<span class="no"> 3</span>     puts <span class="iv">@m</span>.object_id
+<span class="no"> 4</span>     <span class="r">def</span> <span class="fu">initialize</span>
+<span class="no"> 5</span>       puts <span class="s"><span class="dl">'</span><span class="k">In GF class</span><span class="dl">'</span></span>
+<span class="no"> 6</span>     <span class="r">end</span>
+<span class="no"> 7</span>     <span class="r">def</span> <span class="fu">gfmethod</span>
+<span class="no"> 8</span>       puts <span class="s"><span class="dl">'</span><span class="k">GF method call</span><span class="dl">'</span></span>
+<span class="no"> 9</span>     <span class="r">end</span>
+<span class="no"><strong>10</strong></span>   <span class="r">end</span>
+<span class="no">11</span> 
+<span class="no">12</span>   <span class="c"># class F sub-class of GF</span>
+<span class="no">13</span>   <span class="r">class</span> <span class="cl">F</span> &lt; <span class="co">GF</span>
+<span class="no">14</span>     <span class="r">def</span> <span class="fu">initialize</span>
+<span class="no">15</span>       <span class="r">super</span>
+<span class="no">16</span>       puts <span class="s"><span class="dl">'</span><span class="k">In F class</span><span class="dl">'</span></span>
+<span class="no">17</span>     <span class="r">end</span>
+<span class="no">18</span>   <span class="r">end</span>
+<span class="no">19</span> 
+<span class="no"><strong>20</strong></span>   <span class="c"># class S sub-class of F</span>
+<span class="no">21</span>   <span class="r">class</span> <span class="cl">S</span> &lt; <span class="co">F</span>
+<span class="no">22</span>     <span class="r">def</span> <span class="fu">initialize</span>
+<span class="no">23</span>       <span class="r">super</span>
+<span class="no">24</span>       puts <span class="iv">@m</span>
+<span class="no">25</span>       puts <span class="iv">@m</span>.object_id
+<span class="no">26</span>       puts <span class="s"><span class="dl">'</span><span class="k">In S class</span><span class="dl">'</span></span>
+<span class="no">27</span>     <span class="r">end</span>
+<span class="no">28</span>   <span class="r">end</span>
+<span class="no">29</span>   son = <span class="co">S</span>.new
+<span class="no"><strong>30</strong></span>   son.gfmethod
+</pre>
+</div>
+<p>A class can only inherit from one class at a time (i.e. a class can inherit from a class that inherits from another class which inherits from another class, but a single class can not inherit from many classes at once).</p>
+<div class='box'>
+<p>There are many classes and modules (more on this later) built into the standard Ruby language. They are available to every Ruby program automatically; no require is required. Some built-in classes are Array, Bignum, Class, Dir, Exception, File, Fixnum, Float, Integer, IO, Module, Numeric, Object, Range, String, Thread, Time. Some built-in modules are Comparable, Enumerable, GC, Kernel, Math.</p>
+<p>The Object class is the parent class of all classes in Ruby. Its methods are therefore available to all objects unless explicitly overridden. In Ruby 1.9, Object is no longer the root of the class hierarchy. A new class named BasicObject serves that purpose, and Object is a subclass of BasicObject. BasicObject is a very simple class, with almost no methods of its own. When you create a class in Ruby 1.9, you still extend Object unless you explicitly specify the superclass, and most programmers will never need to use or extend BasicObject.</p>
+<p>In Ruby, initialize is an ordinary method and is inherited like any other.</p>
+</div>
+<div class='box'>
+<p>IN RAILS: Inheritance is one of the key organizational techniques for Rails program design and the design of the Rails framework.</p>
+</div>
+<h2>Inheritance and Instance Variables</h2>
+<p>Consider the code:</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span>   <span class="r">class</span> <span class="cl">Dog</span>
+<span class="no"> 2</span>     <span class="r">def</span> <span class="fu">initialize</span>(breed)
+<span class="no"> 3</span>       <span class="iv">@breed</span> = breed
+<span class="no"> 4</span>     <span class="r">end</span>
+<span class="no"> 5</span>   <span class="r">end</span>
+<span class="no"> 6</span> 
+<span class="no"> 7</span>   <span class="r">class</span> <span class="cl">Lab</span> &lt; <span class="co">Dog</span>
+<span class="no"> 8</span>     <span class="r">def</span> <span class="fu">initialize</span>(breed, name)
+<span class="no"> 9</span>       <span class="r">super</span>(breed)
+<span class="no"><strong>10</strong></span>       <span class="iv">@name</span> = name
+<span class="no">11</span>     <span class="r">end</span>
+<span class="no">12</span> 
+<span class="no">13</span>     <span class="r">def</span> <span class="fu">to_s</span>
+<span class="no">14</span>       <span class="s"><span class="dl">&quot;</span><span class="k">(</span><span class="dl">#</span><span class="iv">@breed</span><span class="k">, </span><span class="dl">#</span><span class="iv">@name</span><span class="k">)</span><span class="dl">&quot;</span></span>
+<span class="no">15</span>     <span class="r">end</span>
+<span class="no">16</span>   <span class="r">end</span>
+<span class="no">17</span> 
+<span class="no">18</span>   puts <span class="co">Lab</span>.new(<span class="s"><span class="dl">&quot;</span><span class="k">Labrador</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="k">Benzy</span><span class="dl">&quot;</span></span>).to_s
+</pre>
+</div>
+<p>The to_s method in class Lab references @breed variable from the superclass Dog. This code works as you probably expect it to:</p>
+<div class="CodeRay">
+<pre><span class="no">1</span>    <span class="i">1</span>. puts <span class="co">Lab</span>.new(<span class="s"><span class="dl">&quot;</span><span class="k">Labrador</span><span class="dl">&quot;</span></span>, <span class="s"><span class="dl">&quot;</span><span class="k">Benzy</span><span class="dl">&quot;</span></span>).to_s ==&gt; (<span class="co">Labrador</span>, <span class="co">Benzy</span>)
+</pre>
+</div>
+<p>Because this code behaves as expected, you may be tempted to say that these variables are inherited. That is not how Ruby works.</p>
+<p>All Ruby objects have a set of instance variables. These are not defined by the objects&#8217;s class &#8211; they are simply created when a value is assigned to them. Because instance variables are not defined by a class, they are unrelated to subclassing and the inheritance mechanism.</p>
+<p>In the above code, Lab defines an initialize method that chains to the initialize method of its superclass. The chained method assigns values to the variable @breed, which makes those variables come into existence for a particular instance of Lab.</p>
+<p>The reason that they sometimes appear to be inherited is that instance variables are created by the methods that first assign values to them, and those methods are often inherited or chained.</p>
+<p>Since instance variables have nothing to do with inheritance, it follows that an instance variable used by a subclass cannot &#8220;shadow&#8221; an instance variable in the superclass. If a subclass uses an instance variable with the same name as a variable used by one of its ancestors, it will overwrite the value of its ancestor&#8217;s variable.</p>
+   </div>
+
+   <div class="column span-5 append-2 last">
+
+      <p><a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP"><img src="images/logo_guru-sp.jpg" title="Logo do GURU-SP" alt="Logo do Guru-SP" /></a></p>
+
+      <div class="box">
+         <p>Este material tem como base o <a href="http://www.rubylearning.com" title="Ruby Learning">tutorial do RubyLearning.com de Satish Talim</a> e foi traduzido por membros do <a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP">GURU-SP</a> com a permissão do autor.</p>
+        <p class="last">Ajude o RubyLearning participando em algum dos <a href="http://www.rubylearning.org" title="cursos do Ruby Learning">cursos pagos</a> ou <a href="http://pledgie.com/campaigns/415" title="Ajude o Ruby Learning">fazendo uma doação para o projeto</a></p>
+      </div>
+
+      <p class="quiet"><a href="index.html" title="índice">Voltar para o índice</a></p>
+
+      <h5></h5>
+      <p class="incr"></p>
+   </div>
+
+   <div class="column span-20 prepend-2 append-2 first last" id="footer">
+     <hr />
+     <p>Tuturial de Ruby do <a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP">GURU-SP</a>. Este site foi criado com <a href="http://webby.rubyforge.org">Webby</a></p>
+   </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>Incluindo Outros Arquivos</title>
+   <meta name="author" content="" />
+
+   <!--- Blueprint CSS Framework -->
+   <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection">
+   <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print">
+   <!--[if IE]>
+      <link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection">
+   <![endif]-->
+
+   <!-- CodeRay syntax highlighting CSS -->
+   <link rel="stylesheet" href="css/coderay.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="css/site.css" type="text/css" media="screen, projection" />
+</head>
+<body>
+
+<div class="container">
+
+   <div class="column span-20 prepend-2 append-2 first last" id="header">
+     <p class="title">Tutorial de Ruby do GURU-SP</p>
+     <hr>
+   </div>
+
+   <div class="column span-15 prepend-2 first">
+      <p class="title">Incluindo Outros Arquivos</p>
+<p>When writing your first few Ruby programs, you tend to place all of your code in a single file. But as you grow as a Ruby programmer, your Ruby programs will also grow, and at some point you will realize that having a single file containing all of your code just won&#8217;t do. It is easier to break your code up into logical groupings and place each group in a separate file or files. When you begin using multiple files, you have a need for the Ruby&#8217;s require and load  methods (both are global functions defined in Kernel, but are used like language keywords) that help you include other files in your program.</p>
+<p>The load method includes the named Ruby source file every time the method is executed:</p>
+<div class="CodeRay">
+<pre><span class="no">1</span>   load <span class="s"><span class="dl">'</span><span class="k">filename.rb</span><span class="dl">'</span></span>
+</pre>
+</div>
+<p>The more commonly used require method loads any given file only once:</p>
+<div class="CodeRay">
+<pre><span class="no">1</span>   require <span class="s"><span class="dl">'</span><span class="k">filename</span><span class="dl">'</span></span>
+</pre>
+</div>
+<p>require gives you access to the many extensions and programming libraries bundled with the Ruby programming language-as well as an even larger number of extensions and libraries written independently by other programmers and made available for use with Ruby.</p>
+<p>Note that you say require &#8216;filename&#8217;, not require &#8216;filename.rb&#8217;. Aside from looking nicer, this bareword way of referring to the extension is necessary because not all extensions use files ending in .rb. Specifically, extensions written in C are stored in files ending with .so or .dll. To keep the process transparent-that is, to save you the trouble of knowing whether the extension you want uses a .rb file or not-Ruby accepts a bareword and then does some automatic file-searching and trying out of possible filenames until it finds the file corresponding to the extension you have requested.</p>
+<div class='box'>
+<p>require(string) =&gt; true or false</p>
+<p>Ruby tries to load the library named string, returning true if successful. If the filename does not resolve to an absolute path, it will be searched for in the directories listed in $:. If the file has the extension &#8220;.rb&#8221;, it is loaded as a source file; if the extension is &#8220;.so&#8221;, &#8220;.o&#8221;, or &#8220;.dll&#8221;, or whatever the default shared library extension is on the current platform, Ruby loads the shared library as a Ruby extension. Otherwise, Ruby tries adding &#8220;.rb&#8221;, &#8220;.so&#8221;, and so on to the name. The name of the loaded feature is added to the array in $:.</p>
+</div>
+<div class='box'>
+<p>IN RAILS: Rails uses load in preference to require, for example, in development mode &#8211; which means that if you&#8217;re trying your application in a browser and making changes to the code at the same time, your changes are reloaded, overriding any caching behavior on the part of the Web server. Multiple require calls in the same place don&#8217;t have the same effect if the application has already read the file in once.</p>
+</div>
+<p>Now, let&#8217;s look at an example of another class &#8211; p030motorcycle.rb</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span>   <span class="r">class</span> <span class="cl">MotorCycle</span>
+<span class="no"> 2</span>     <span class="r">def</span> <span class="fu">initialize</span>(make, color)
+<span class="no"> 3</span>       <span class="c"># Instance variables</span>
+<span class="no"> 4</span>       <span class="iv">@make</span> = make
+<span class="no"> 5</span>       <span class="iv">@color</span> = color
+<span class="no"> 6</span>       <span class="r">end</span>
+<span class="no"> 7</span>     <span class="r">def</span> <span class="fu">startEngine</span>
+<span class="no"> 8</span>       <span class="r">if</span> (<span class="iv">@engineState</span>)
+<span class="no"> 9</span>         puts <span class="s"><span class="dl">'</span><span class="k">Engine is already Running</span><span class="dl">'</span></span>
+<span class="no"><strong>10</strong></span>       <span class="r">else</span>
+<span class="no">11</span>         <span class="iv">@engineState</span> = <span class="pc">true</span>
+<span class="no">12</span>         puts <span class="s"><span class="dl">'</span><span class="k">Engine Idle</span><span class="dl">'</span></span>
+<span class="no">13</span>       <span class="r">end</span>
+<span class="no">14</span>     <span class="r">end</span>
+<span class="no">15</span>   <span class="r">end</span>
+</pre>
+</div>
+<p>We write another program p031motorcycletest.rb to test out the above class.</p>
+<div class="CodeRay">
+<pre><span class="no">1</span>   <span class="c"># p031motorcycletest.rb</span>
+<span class="no">2</span>   require <span class="s"><span class="dl">'</span><span class="k">p030motorcycle</span><span class="dl">'</span></span>
+<span class="no">3</span>   m = <span class="co">MotorCycle</span>.new(<span class="s"><span class="dl">'</span><span class="k">Yamaha</span><span class="dl">'</span></span>, <span class="s"><span class="dl">'</span><span class="k">red</span><span class="dl">'</span></span>)
+<span class="no">4</span>   m.startEngine
+</pre>
+</div>
+   </div>
+
+   <div class="column span-5 append-2 last">
+
+      <p><a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP"><img src="images/logo_guru-sp.jpg" title="Logo do GURU-SP" alt="Logo do Guru-SP" /></a></p>
+
+      <div class="box">
+         <p>Este material tem como base o <a href="http://www.rubylearning.com" title="Ruby Learning">tutorial do RubyLearning.com de Satish Talim</a> e foi traduzido por membros do <a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP">GURU-SP</a> com a permissão do autor.</p>
+        <p class="last">Ajude o RubyLearning participando em algum dos <a href="http://www.rubylearning.org" title="cursos do Ruby Learning">cursos pagos</a> ou <a href="http://pledgie.com/campaigns/415" title="Ajude o Ruby Learning">fazendo uma doação para o projeto</a></p>
+      </div>
+
+      <p class="quiet"><a href="index.html" title="índice">Voltar para o índice</a></p>
+
+      <h5></h5>
+      <p class="incr"></p>
+   </div>
+
+   <div class="column span-20 prepend-2 append-2 first last" id="footer">
+     <hr />
+     <p>Tuturial de Ruby do <a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP">GURU-SP</a>. Este site foi criado com <a href="http://webby.rubyforge.org">Webby</a></p>
+   </div>
+
+</div>
+</body>
+</html>

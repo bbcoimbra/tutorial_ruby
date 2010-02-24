@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>Metodos de Sobrecarga em Ruby</title>
+   <meta name="author" content="" />
+
+   <!--- Blueprint CSS Framework -->
+   <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection">
+   <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print">
+   <!--[if IE]>
+      <link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection">
+   <![endif]-->
+
+   <!-- CodeRay syntax highlighting CSS -->
+   <link rel="stylesheet" href="css/coderay.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="css/site.css" type="text/css" media="screen, projection" />
+</head>
+<body>
+
+<div class="container">
+
+   <div class="column span-20 prepend-2 append-2 first last" id="header">
+     <p class="title">Tutorial de Ruby do GURU-SP</p>
+     <hr>
+   </div>
+
+   <div class="column span-15 prepend-2 first">
+      <p class="title">Metodos de Sobrecarga em Ruby</p>
+<p>You want to create two different versions of a method with the same name: two methods that differ in the arguments they take. However, a Ruby class can have only one method with a given name  (if you define a method with the same name twice, the latter method definition prevails as seen in example p038or.rb in topic Ruby Overriding Methods). Within that single method, though, you can put logic that branches depending on how many and what kinds of objects were passed in as arguments.</p>
+<p>Here&#8217;s a Rectangle class that represents a rectangular shape on a grid. You can instantiate a Rectangle by one of two ways: by passing in the coordinates of its top-left and bottom-right corners, or by passing in its top-left corner along with its length and width. There&#8217;s only one initialize method, but you can act as though there were two.</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span>   <span class="c"># The Rectangle constructor accepts arguments in either</span>
+<span class="no"> 2</span>   <span class="c"># of the following forms:</span>
+<span class="no"> 3</span>   <span class="c">#   Rectangle.new([x_top, y_left], length, width)</span>
+<span class="no"> 4</span>   <span class="c">#   Rectangle.new([x_top, y_left], [x_bottom, y_right])</span>
+<span class="no"> 5</span>   <span class="r">class</span> <span class="cl">Rectangle</span>
+<span class="no"> 6</span>     <span class="r">def</span> <span class="fu">initialize</span>(*args)
+<span class="no"> 7</span>       <span class="r">if</span> args.size &lt; <span class="i">2</span>  || args.size &gt; <span class="i">3</span>
+<span class="no"> 8</span>         <span class="c"># modify this to raise exception, later</span>
+<span class="no"> 9</span>         puts <span class="s"><span class="dl">'</span><span class="k">This method takes either 2 or 3 arguments</span><span class="dl">'</span></span>
+<span class="no"><strong>10</strong></span>       <span class="r">else</span>
+<span class="no">11</span>         <span class="r">if</span> args.size == <span class="i">2</span>
+<span class="no">12</span>           puts <span class="s"><span class="dl">'</span><span class="k">Two arguments</span><span class="dl">'</span></span>
+<span class="no">13</span>         <span class="r">else</span>
+<span class="no">14</span>           puts <span class="s"><span class="dl">'</span><span class="k">Three arguments</span><span class="dl">'</span></span>
+<span class="no">15</span>         <span class="r">end</span>
+<span class="no">16</span>       <span class="r">end</span>
+<span class="no">17</span>     <span class="r">end</span>
+<span class="no">18</span>   <span class="r">end</span>
+<span class="no">19</span>   <span class="co">Rectangle</span>.new([<span class="i">10</span>, <span class="i">23</span>], <span class="i">4</span>, <span class="i">10</span>)
+<span class="no"><strong>20</strong></span>   <span class="co">Rectangle</span>.new([<span class="i">10</span>, <span class="i">23</span>], [<span class="i">14</span>, <span class="i">13</span>])
+</pre>
+</div>
+<p>The above program p037rectangle.rb is incomplete from the Rectangle class viewpoint, but is enough to demonstrate how method overloading can be achieved. Also remember that the initialize method takes in a variable number of arguments.</p>
+<h2>Summary</h2>
+<p>I have listed down all the important points you need to remember after you have completed the following topics: Including other files, Ruby Open Classes, Inheritance, Overriding Methods, Overloading Methods.</p>
+   </div>
+
+   <div class="column span-5 append-2 last">
+
+      <p><a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP"><img src="images/logo_guru-sp.jpg" title="Logo do GURU-SP" alt="Logo do Guru-SP" /></a></p>
+
+      <div class="box">
+         <p>Este material tem como base o <a href="http://www.rubylearning.com" title="Ruby Learning">tutorial do RubyLearning.com de Satish Talim</a> e foi traduzido por membros do <a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP">GURU-SP</a> com a permissão do autor.</p>
+        <p class="last">Ajude o RubyLearning participando em algum dos <a href="http://www.rubylearning.org" title="cursos do Ruby Learning">cursos pagos</a> ou <a href="http://pledgie.com/campaigns/415" title="Ajude o Ruby Learning">fazendo uma doação para o projeto</a></p>
+      </div>
+
+      <p class="quiet"><a href="index.html" title="índice">Voltar para o índice</a></p>
+
+      <h5></h5>
+      <p class="incr"></p>
+   </div>
+
+   <div class="column span-20 prepend-2 append-2 first last" id="footer">
+     <hr />
+     <p>Tuturial de Ruby do <a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP">GURU-SP</a>. Este site foi criado com <a href="http://webby.rubyforge.org">Webby</a></p>
+   </div>
+
+</div>
+</body>
+</html>

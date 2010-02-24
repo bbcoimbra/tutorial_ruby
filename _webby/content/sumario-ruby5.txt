@@ -7,12 +7,49 @@ filter:
 ---
 p(title). <%= h(@page.title) %>
 
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nunc congue ipsum vestibulum libero. Aenean vitae justo. Nam eget tellus. Etiam convallis, est eu lobortis mattis, lectus tellus tempus felis, a ultricies erat ipsum at metus.
+# Regular expressions, though cryptic, is a powerful tool for working with text. Ruby has this feature built-in. It's used for pattern-matching and text processing.
+# Many people find regular expressions difficult to use, difficult to read, un-maintainable, and ultimately counterproductive.
+# You may end up using only a modest number of regular expressions in your Ruby and Rails applications.
+# Becoming a regular expression wizard isn't a prerequisite for Rails programming.
+# It's advisable to learn at least the basics of how regular expressions work.
+# A regular expression is simply a way of specifying a pattern of characters to be matched in a string.
+# In Ruby, you typically create a regular expression by writing a pattern between slash characters (/pattern/). In Ruby, regular expressions are objects (of type Regexp) and can be manipulated as such. // is a regular expression and an instance of the Regexp class.
+# An object is an entity that serves as a container for data and also controls access to the data. Associated with an object is a set of attributes, which are essentially no more than variables belonging to that object. Also associated with an object is a set of functions that provide an interface to the functionality of the object, called methods.
+# Things an object knows about itself are called instance variables. They represent an object's state (the data - for example, the quantity and the product id), and can have unique values for each object of that type.
+# Things an object can do are called methods.
+# An object is a combination of state and methods that use the state.
+# A class is used to construct an object. A class is a blueprint for an object.
+# More than 30 built-in classes are predefined in the Ruby class hierarchy. The following class hierarchy is important,
+# In Ruby, everything from an integer to a string is considered to be an object. And each object has built in 'methods' (Ruby term for functions) which can be used to do various useful things. To use a method, you need to put a dot after the object, and then append the method name. Some methods such as puts and gets are available everywhere and don't need to be associated with a specific object. Technically speaking, these methods are provided by Ruby's Kernel module (more on this later) and they are included in all Ruby objects (the Kernel module is included by class Object, so its methods are available in every Ruby object). When you run a Ruby application, an object called main of class Object is automatically created. This object provides access to the Kernel methods.
+# Ruby integers are objects of class Fixnum or Bignum. The Fixnum and Bignum classes represent integers of differing sizes. Both classes descend from Integer (and therefore Numeric). The floating-point numbers are objects of class Float, corresponding to the native architecture's double data type.
+# A new class is defined typically using class Name ... end
+# Classes in Ruby are first-class objects - each is an instance of class Class.
+# MUG THIS UP Class is an object, and Object is a class." Hal Fulton
+# When a new class is defined say Name, an object of type Class is created and assigned to a constant (Name. in this case). When Name.new is called to create a new object, the new class method in Class is run by default, which in turn invokes allocate to allocate memory for the object, before finally calling the new object's initialize method. The constructing and initializing phases of an object are separate and both can be over-ridden. The initialization is done via the initialize instance method while the construction is done via the new class method. initialize is not a constructor!
+# Objects are created on the heap.
+# In the statement: d = Dog.new('Labrador', 'Benzy') The variable d is known as a reference variable. It does not hold the object itself, but it holds something like a pointer or an address of the object. You use the dot operator (.) on a reference variable to say, "use the thing before the dot to get me the thing after the dot." For example: d.bark
+# As soon as an object comes into existence, it already responds to a number of messages. Every object is "born" with certain innate abilities. To see a list of innate methods, you can call the methods method: puts d.methods The result is a list of all the messages (methods) this newly minted object comes bundled with. Amongst these many methods, the methods object_id and respond_to? are important.
+# Every object in Ruby has a unique id number associated with it that can be found by the method object_id.
+# You can determine in advance (before you ask the object to do something) whether the object knows how to handle the message you want to send it, by using the respond_to? method.
+# You can ask any object of which class it's a member by using its Object.class method.
+# instance_of? returns true if object is an instance of the given class.
+# Literal 'Constructors' means you can use special notation, instead of a call to new, to create a new object of that class. Look at the example given for String. Symbol, Array, Hash, Range, Regexp
+# Garbage Collection (GC): The Ruby object heap allocates a minimum of 8 megabytes. Ruby's GC is called mark-and-sweep. The "mark" stage checks objects to see if they are still in use. If an object is in a variable that can still be used in the current scope, the object (and any object inside that object) is marked for keeping. If the variable is long gone, off in another method, the object isn't marked. The "sweep" stage then frees objects which haven't been marked. Ruby uses a conservative mark-and-sweep GC mechanism. There is no guarantee that an object will undergo garbage collection before the program terminates.
+# Variables are used to hold references to objects. Variables themselves have no type, nor are they objects themselves.
+# method_missing gives you a way to intercept unanswerable messages and handle them gracefully.
+# Blocks are not objects, but they can be converted into objects of class Proc. This can be done by calling the lambda method of the module Kernel.
+# Remember you cannot pass methods into other methods (but you can pass procs into methods), and methods cannot return other methods (but they can return procs).
+# The load method includes the named Ruby source file every time the method is executed.
+# The more commonly used require method loads any given file only once.
+# Note that you say require 'filename', not require 'filename.rb'.
+# In Ruby, classes are never closed: you can always add methods to an existing class. This applies to the classes you write as well as the standard, built-in classes. All you have to do is open up a class definition for an existing class, and the new contents you specify will be added to whatever's there.
+# The benefit of inheritance is that classes lower down the hierarchy get the features of those higher up, but can also add specific features of their own.
+# In Ruby, a class can only inherit from a single other class.
+# The Object class is the parent class of all classes in Ruby. Its methods are therefore available to all objects unless explicitly overridden.
+# Method overriding allows a subclass to provide a specific implementation of a method that is already provided by one of its superclasses. The implementation in the subclass overrides (replaces) the implementation in the superclass.
+# Nothing stops you from defining a method twice, however the new version takes precedence.
+# When you invoke super with no arguments Ruby sends a message to the parent of the current object, asking it to invoke a method of the same name as the method invoking super. It automatically forwards the arguments that were passed to the method from which it's called.
+# Called with an empty argument list - super() - it sends no arguments to the higher-up method, even if arguments were passed to the current method.
+# Called with specific arguments - super(a, b, c) - it sends exactly those arguments.
+# A Ruby class can have only one method with a given name.
 
-h2. Litora Sociis
-
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi et risus. Aliquam nisl. Nulla facilisi. Cras accumsan vestibulum ante. Vestibulum sed tortor. Praesent tempus fringilla elit. Ut elit diam, sagittis in, nonummy in, gravida non, nunc. Ut orci. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Nam egestas, orci eu imperdiet malesuada, nisl purus fringilla odio, quis commodo est orci vitae justo. Aliquam placerat odio tincidunt nulla. Cras in libero. Aenean rutrum, magna non tristique posuere, erat odio eleifend nisl, non convallis est tortor blandit ligula. Nulla id augue.
-
-bq. Nullam mattis, odio ut tempus facilisis, metus nisl facilisis metus, auctor consectetuer felis ligula nec mauris. Vestibulum odio erat, fermentum at, commodo vitae, ultrices et, urna. Mauris vulputate, mi pulvinar sagittis condimentum, sem nulla aliquam velit, sed imperdiet mi purus eu magna. Nulla varius metus ut eros. Aenean aliquet magna eget orci. Class aptent taciti sociosqu ad litora.
-
-Vivamus euismod. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Suspendisse vel nibh ut turpis dictum sagittis. Aliquam vel velit a elit auctor sollicitudin. Nam vel dui vel neque lacinia pretium. Quisque nunc erat, venenatis id, volutpat ut, scelerisque sed, diam. Mauris ante. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec mattis. Morbi dignissim sollicitudin libero. Nulla lorem.

@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>Procs em Ruby</title>
+   <meta name="author" content="" />
+
+   <!--- Blueprint CSS Framework -->
+   <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection">
+   <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print">
+   <!--[if IE]>
+      <link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection">
+   <![endif]-->
+
+   <!-- CodeRay syntax highlighting CSS -->
+   <link rel="stylesheet" href="css/coderay.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="css/site.css" type="text/css" media="screen, projection" />
+</head>
+<body>
+
+<div class="container">
+
+   <div class="column span-20 prepend-2 append-2 first last" id="header">
+     <p class="title">Tutorial de Ruby do GURU-SP</p>
+     <hr>
+   </div>
+
+   <div class="column span-15 prepend-2 first">
+      <p class="title">Procs em Ruby</p>
+<p>Blocks are not objects, but they can be converted into objects of class Proc. This can be done by calling the lambda  method of the module Kernel. A block created with lambda  acts like a Ruby method. If you don&#8217;t specify the right number of arguments, you can&#8217;t call the block.</p>
+<div class="CodeRay">
+<pre><span class="no">1</span>   prc = lambda {<span class="s"><span class="dl">&quot;</span><span class="k">hello</span><span class="dl">&quot;</span></span>}
+</pre>
+</div>
+<p>Proc objects are blocks of code that have been bound to a set of local variables. The class Proc has a method call that invokes the block. The program p024proccall.rb illustrates this.</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span>   <span class="c"># Blocks are not objects</span>
+<span class="no"> 2</span>   <span class="c"># they can be converted into objects of class Proc by calling lambda method</span>
+<span class="no"> 3</span>   prc = lambda {puts <span class="s"><span class="dl">'</span><span class="k">Hello</span><span class="dl">'</span></span>}
+<span class="no"> 4</span>   <span class="c"># method call invokes the block</span>
+<span class="no"> 5</span>   prc.call
+<span class="no"> 6</span> 
+<span class="no"> 7</span>   <span class="c"># another example</span>
+<span class="no"> 8</span>   toast = lambda <span class="r">do</span>
+<span class="no"> 9</span>     puts <span class="s"><span class="dl">'</span><span class="k">Cheers</span><span class="dl">'</span></span>
+<span class="no"><strong>10</strong></span>   <span class="r">end</span>
+<span class="no">11</span>   toast.call
+</pre>
+</div>
+<p>The output is:</p>
+<div class="CodeRay">
+<pre><span class="no">1</span> &gt;ruby p024proccall.rb
+<span class="no">2</span> Hello
+<span class="no">3</span> Cheers
+<span class="no">4</span> &gt;Exit code: 0
+</pre>
+</div>
+<p>Remember you cannot pass methods into other methods (but you can pass procs into methods), and methods cannot return other methods (but they can return procs).</p>
+<p>The next example shows how methods can take procs. Example p025mtdproc.rb</p>
+<div class="CodeRay">
+<pre><span class="no"> 1</span>   =<span class="r">begin</span>
+<span class="no"> 2</span>     <span class="co">You</span> cannot pass methods into other methods (but you can pass procs into methods),
+<span class="no"> 3</span>     <span class="r">and</span> methods cannot <span class="r">return</span> other methods (but they can <span class="r">return</span> procs)
+<span class="no"> 4</span>   =<span class="r">end</span>
+<span class="no"> 5</span> 
+<span class="no"> 6</span>   <span class="r">def</span> <span class="fu">some_mtd</span> some_proc
+<span class="no"> 7</span>     puts <span class="s"><span class="dl">'</span><span class="k">Start of mtd</span><span class="dl">'</span></span>
+<span class="no"> 8</span>     some_proc.call
+<span class="no"> 9</span>     puts <span class="s"><span class="dl">'</span><span class="k">End of mtd</span><span class="dl">'</span></span>
+<span class="no"><strong>10</strong></span>   <span class="r">end</span>
+<span class="no">11</span> 
+<span class="no">12</span>   say = lambda <span class="r">do</span>
+<span class="no">13</span>     puts <span class="s"><span class="dl">'</span><span class="k">Hello</span><span class="dl">'</span></span>
+<span class="no">14</span>   <span class="r">end</span>
+<span class="no">15</span> 
+<span class="no">16</span>   some_mtd say
+</pre>
+</div>
+<p>The output is:</p>
+<div class="CodeRay">
+<pre><span class="no">1</span>    1. &gt;ruby p025mtdproc.rb
+<span class="no">2</span>    2. Start of mtd
+<span class="no">3</span>    3. Hello
+<span class="no">4</span>    4. End of mtd
+<span class="no">5</span>    5. &gt;Exit code: 0
+</pre>
+</div>
+<p>Here&#8217;s another example of passing arguments using lambda.</p>
+<div class="CodeRay">
+<pre><span class="no">1</span>    <span class="i">1</span>. aBlock = lambda { |x| puts x }
+<span class="no">2</span>    <span class="i">2</span>. aBlock.call <span class="s"><span class="dl">'</span><span class="k">Hello World!</span><span class="dl">'</span></span>
+<span class="no">3</span>    <span class="i">3</span>. <span class="c"># output is: Hello World!</span>
+</pre>
+</div>
+<div class=box>
+<p>Fabio Akita a Brazilian Rails enthusiast, also known online as &#8220;AkitaOnRails&#8221;, wrote this exclusive article on <a href="http://rubylearning.com/blog/2007/11/30/akitaonrails-on-anatomy-of-ruby-blocksclosures/">Ruby Blocks/Closures</a> for the rubylearning.com members like you. Do read, after you have gone through this lesson.</p>
+</div>
+   </div>
+
+   <div class="column span-5 append-2 last">
+
+      <p><a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP"><img src="images/logo_guru-sp.jpg" title="Logo do GURU-SP" alt="Logo do Guru-SP" /></a></p>
+
+      <div class="box">
+         <p>Este material tem como base o <a href="http://www.rubylearning.com" title="Ruby Learning">tutorial do RubyLearning.com de Satish Talim</a> e foi traduzido por membros do <a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP">GURU-SP</a> com a permissão do autor.</p>
+        <p class="last">Ajude o RubyLearning participando em algum dos <a href="http://www.rubylearning.org" title="cursos do Ruby Learning">cursos pagos</a> ou <a href="http://pledgie.com/campaigns/415" title="Ajude o Ruby Learning">fazendo uma doação para o projeto</a></p>
+      </div>
+
+      <p class="quiet"><a href="index.html" title="índice">Voltar para o índice</a></p>
+
+      <h5></h5>
+      <p class="incr"></p>
+   </div>
+
+   <div class="column span-20 prepend-2 append-2 first last" id="footer">
+     <hr />
+     <p>Tuturial de Ruby do <a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP">GURU-SP</a>. Este site foi criado com <a href="http://webby.rubyforge.org">Webby</a></p>
+   </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>Hashes</title>
+   <meta name="author" content="" />
+
+   <!--- Blueprint CSS Framework -->
+   <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection">
+   <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print">
+   <!--[if IE]>
+      <link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection">
+   <![endif]-->
+
+   <!-- CodeRay syntax highlighting CSS -->
+   <link rel="stylesheet" href="css/coderay.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="css/site.css" type="text/css" media="screen, projection" />
+</head>
+<body>
+
+<div class="container">
+
+   <div class="column span-20 prepend-2 append-2 first last" id="header">
+     <p class="title">Tutorial de Ruby do GURU-SP</p>
+     <hr>
+   </div>
+
+   <div class="column span-15 prepend-2 first">
+      <p class="title">Hashes</p>
+<p>Hashes (sometimes known as associative arrays, maps, or dictionaries) are similar to arrays in that they are indexed collection of object references. However, while you index arrays with integers, you can index a hash with objects of any types: strings, regular expressions, and so on. When you store a value in a hash, you actually supply two objects &#8211; the index (normally called the key) and the value. You can subsequently retrieve the value by indexing the hash with the same key. The values in a hash can be objects of any type.</p>
+<p>The example p040myhash.rb below, uses hash literals: a list of key =&gt; value pairs between braces.</p>
+<div class="CodeRay">
+<pre><span class="no">1</span>   <span class="c"># p040myhash.rb</span>
+<span class="no">2</span>   h = {<span class="s"><span class="dl">'</span><span class="k">dog</span><span class="dl">'</span></span> =&gt; <span class="s"><span class="dl">'</span><span class="k">canine</span><span class="dl">'</span></span>, <span class="s"><span class="dl">'</span><span class="k">cat</span><span class="dl">'</span></span> =&gt; <span class="s"><span class="dl">'</span><span class="k">feline</span><span class="dl">'</span></span>, <span class="s"><span class="dl">'</span><span class="k">donkey</span><span class="dl">'</span></span> =&gt; <span class="s"><span class="dl">'</span><span class="k">asinine</span><span class="dl">'</span></span>, <span class="i">12</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">dodecine</span><span class="dl">'</span></span>}
+<span class="no">3</span>   puts h.length  <span class="c"># 4</span>
+<span class="no">4</span>   puts h[<span class="s"><span class="dl">'</span><span class="k">dog</span><span class="dl">'</span></span>]  <span class="c"># 'canine'</span>
+<span class="no">5</span>   puts h
+<span class="no">6</span>   puts h[<span class="i">12</span>]
+</pre>
+</div>
+<p>The output is:</p>
+<div class="CodeRay">
+<pre><span class="no">1</span>   &gt;ruby p040myhash.rb
+<span class="no">2</span>   4
+<span class="no">3</span>   canine
+<span class="no">4</span>   {&quot;dog&quot;=&gt;&quot;canine&quot;, &quot;cat&quot;=&gt;&quot;feline&quot;, &quot;donkey&quot;=&gt;&quot;asinine&quot;, 12=&gt;&quot;dodecine&quot;}
+<span class="no">5</span>   dodecine
+<span class="no">6</span>   &gt;Exit code: 0
+</pre>
+</div>
+<p>Compared with arrays, hashes have one significant advantage: they can use any object as an index.</p>
+<p>Hashes have a default value. This value is returned when an attempt is made to access keys that do not exist in the hash. By default this value is nil.</p>
+<p>The Hash class has many methods and you can refer them <a href="http://railsapi.com/doc/ruby-v1.9/classes/Hash.html">here</a></p>
+<h2>Using Symbols as Hash Keys</h2>
+<p>Whenever you would otherwise use a quoted string, use a symbol instead. See the following example p041symbolhash.rb</p>
+<div class="CodeRay">
+<pre><span class="no">1</span>   <span class="c"># p041symbolhash.rb</span>
+<span class="no">2</span>   people = <span class="co">Hash</span>.new
+<span class="no">3</span>   people[<span class="sy">:nickname</span>] = <span class="s"><span class="dl">'</span><span class="k">IndianGuru</span><span class="dl">'</span></span>
+<span class="no">4</span>   people[<span class="sy">:language</span>] = <span class="s"><span class="dl">'</span><span class="k">Marathi</span><span class="dl">'</span></span>
+<span class="no">5</span>   people[<span class="sy">:lastname</span>] = <span class="s"><span class="dl">'</span><span class="k">Talim</span><span class="dl">'</span></span>
+<span class="no">6</span> 
+<span class="no">7</span>   puts people[<span class="sy">:lastname</span>] <span class="c"># Talim</span>
+</pre>
+</div>
+<p>Another example is p0411symbolhash.rb</p>
+<div class="CodeRay">
+<pre><span class="no">1</span>   <span class="c"># p0411symbolhash.rb</span>
+<span class="no">2</span>   h = {<span class="sy">:nickname</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">IndianGuru</span><span class="dl">'</span></span>, <span class="sy">:language</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Marathi</span><span class="dl">'</span></span>, <span class="sy">:lastname</span> =&gt; <span class="s"><span class="dl">'</span><span class="k">Talim</span><span class="dl">'</span></span>}
+<span class="no">3</span>   puts h
+</pre>
+</div>
+<p>The output is:</p>
+<div class="CodeRay">
+<pre><span class="no">1</span>   {:nickname=&gt;&quot;IndianGuru&quot;, :language=&gt;&quot;Marathi&quot;, :lastname=&gt;&quot;Talim&quot;}
+</pre>
+</div>
+<p>Another way of doing the same thing is as shown in p0412symbolhash.rb</p>
+<div class="CodeRay">
+<pre><span class="no">1</span>   <span class="c"># p0412symbolhash.rb</span>
+<span class="no">2</span>   h = {nickname: <span class="s"><span class="dl">'</span><span class="k">IndianGuru</span><span class="dl">'</span></span>, language: <span class="s"><span class="dl">'</span><span class="k">Marathi</span><span class="dl">'</span></span>, lastname: <span class="s"><span class="dl">'</span><span class="k">Talim</span><span class="dl">'</span></span>}
+<span class="no">3</span>   puts h
+</pre>
+</div>
+<p>The output is:</p>
+<div class="CodeRay">
+<pre><span class="no">1</span>   {<span class="sy">:nickname</span>=&gt;<span class="s"><span class="dl">&quot;</span><span class="k">IndianGuru</span><span class="dl">&quot;</span></span>, <span class="sy">:language</span>=&gt;<span class="s"><span class="dl">&quot;</span><span class="k">Marathi</span><span class="dl">&quot;</span></span>, <span class="sy">:lastname</span>=&gt;<span class="s"><span class="dl">&quot;</span><span class="k">Talim</span><span class="dl">&quot;</span></span>}
+</pre>
+</div>
+<p>Exactly the same as in p0411symbolhash.rb</p>
+   </div>
+
+   <div class="column span-5 append-2 last">
+
+      <p><a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP"><img src="images/logo_guru-sp.jpg" title="Logo do GURU-SP" alt="Logo do Guru-SP" /></a></p>
+
+      <div class="box">
+         <p>Este material tem como base o <a href="http://www.rubylearning.com" title="Ruby Learning">tutorial do RubyLearning.com de Satish Talim</a> e foi traduzido por membros do <a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP">GURU-SP</a> com a permissão do autor.</p>
+        <p class="last">Ajude o RubyLearning participando em algum dos <a href="http://www.rubylearning.org" title="cursos do Ruby Learning">cursos pagos</a> ou <a href="http://pledgie.com/campaigns/415" title="Ajude o Ruby Learning">fazendo uma doação para o projeto</a></p>
+      </div>
+
+      <p class="quiet"><a href="index.html" title="índice">Voltar para o índice</a></p>
+
+      <h5></h5>
+      <p class="incr"></p>
+   </div>
+
+   <div class="column span-20 prepend-2 append-2 first last" id="footer">
+     <hr />
+     <p>Tuturial de Ruby do <a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP">GURU-SP</a>. Este site foi criado com <a href="http://webby.rubyforge.org">Webby</a></p>
+   </div>
+
+</div>
+</body>
+</html>

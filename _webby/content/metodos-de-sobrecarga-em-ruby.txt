@@ -1,0 +1,41 @@
+---
+title:      Metodos de Sobrecarga em Ruby
+created_at: 2009-12-23 14:29:25.387994 -02:00
+filter:
+ - erb
+ - textile
+---
+p(title). <%= h(@page.title) %>
+
+You want to create two different versions of a method with the same name: two methods that differ in the arguments they take. However, a Ruby class can have only one method with a given name  (if you define a method with the same name twice, the latter method definition prevails as seen in example p038or.rb in topic Ruby Overriding Methods). Within that single method, though, you can put logic that branches depending on how many and what kinds of objects were passed in as arguments.
+
+Here's a Rectangle class that represents a rectangular shape on a grid. You can instantiate a Rectangle by one of two ways: by passing in the coordinates of its top-left and bottom-right corners, or by passing in its top-left corner along with its length and width. There's only one initialize method, but you can act as though there were two.
+
+<% coderay(:lang => "ruby", :line_numbers => "inline") do -%>
+  # The Rectangle constructor accepts arguments in either
+  # of the following forms:
+  #   Rectangle.new([x_top, y_left], length, width)
+  #   Rectangle.new([x_top, y_left], [x_bottom, y_right])
+  class Rectangle
+    def initialize(*args)
+      if args.size < 2  || args.size > 3
+        # modify this to raise exception, later
+        puts 'This method takes either 2 or 3 arguments'
+      else
+        if args.size == 2
+          puts 'Two arguments'
+        else
+          puts 'Three arguments'
+        end
+      end
+    end
+  end
+  Rectangle.new([10, 23], 4, 10)
+  Rectangle.new([10, 23], [14, 13])
+<% end -%>
+
+The above program p037rectangle.rb is incomplete from the Rectangle class viewpoint, but is enough to demonstrate how method overloading can be achieved. Also remember that the initialize method takes in a variable number of arguments.
+
+h2. Summary
+
+I have listed down all the important points you need to remember after you have completed the following topics: Including other files, Ruby Open Classes, Inheritance, Overriding Methods, Overloading Methods.
