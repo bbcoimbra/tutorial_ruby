@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 <head>
    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-   <title>sumario ruby8</title>
+   <title>serializacao de objetos</title>
    <meta name="author" content="" />
 
    <!--- Blueprint CSS Framework -->
@@ -30,29 +30,52 @@
    </div>
 
    <div class="column span-15 prepend-2 first">
-      <p class="title">sumario ruby8</p>
+      <p class="title">serializacao de objetos</p>
+<p>Java features the ability to serialize objects, letting you store them somewhere and reconstitute them when needed. Ruby calls this kind of serialization marshaling.</p>
+<p>We will write a basic class p051gamecharacters.rb just for testing marshalling.</p>
+<p><code class='ruby'></p>
 <ol>
-	<li>Ruby Modules are similar to classes in that they hold a collection of methods, constants, and other module and class definitions. Unlike classes, you cannot create objects based on modules; instead, you specify that you want the functionality of a particular module to be added to the functionality of a class, or of a specific object.</li>
-	<li>Modules serve two purposes: First they act as namespace, letting you define methods whose names will not clash with those defined elsewhere. Second, they allow you to share functionality between classes &#8211; if a class mixes in a module, that module&#8217;s instance methods become available as if they had been defined in the class. They get mixed in.</li>
-	<li>Observe how we use require or load. require and load take strings as their arguments.</li>
+	<li>p051gamecharacters.rb<br />
+  class GameCharacter<br />
+    def initialize(power, type, weapons)<br />
+      @power = power<br />
+      @type = type<br />
+      @weapons = weapons<br />
+    end<br />
+    attr_reader :power, :type, :weapons<br />
+  end<br />
+</code></li>
 </ol>
-require &#8216;motorcycle&#8217; or load &#8216;motorcycle.rb&#8217;
-include takes the name of a module, in the form of a constant, as in include &#8216;Stuff&#8217;.
-The include method accepts any number of Module objects to mix in:
-include Enumerable, Comparable
-Although every class is a module, the include method does not allow a class to be included within another class.
+<p>The program p052dumpgc.rb creates an object of the above class and then uses Marshal.dump to save a serialized version of it to the disk.</p>
+<p><code class='ruby'></p>
 <ol>
-	<li>Remember that you can mix in more than one module in a class. However, a class cannot inherit from more than one class.</li>
-	<li>Class names tend to be nouns, while module names are often adjectives.</li>
-	<li>At every point when your program is running, there is one and only one self &#8211; the current or default object accessible to you in your program.</li>
-	<li>Please note the rules given for self in the Self related page.</li>
-	<li>Java features the ability to serialize objects, letting you store them somewhere and reconstitute them when needed. Ruby calls this kind of serialization marshaling.</li>
-	<li>Marshal.dump is used to save a serialized version of an object.</li>
-	<li>Marshal.load is used to read in from a serialized object.</li>
-	<li>A Ruby constant is a reference to an object.</li>
-	<li>Although constants should not be changed, you can modify the internal states of the objects they reference.</li>
-	<li>Remember the rules for constants.</li>
+	<li>p052dumpgc.rb<br />
+  require &#8216;p051gamecharacters&#8217;<br />
+  gc = GameCharacter.new(120, &#8216;Magician&#8217;, [&#8216;spells&#8217;, &#8216;invisibility&#8217;])<br />
+  puts gc.power.to_s + &#8217; &#8217; + gc.type + &#8217; &#8217;<br />
+  gc.weapons.each do |w|<br />
+    puts w + &#8217; &#8217;<br />
+  end</li>
 </ol>
+File.open(&#8216;game&#8217;, &#8216;w+&#8217;) do |f|
+Marshal.dump(gc, f)
+end
+<p></code></p>
+<p>The program p053loadgc.rb uses Marshal.load to read it in.</p>
+<p><code class='ruby'></p>
+<ol>
+	<li>p053loadgc.rb<br />
+  require &#8216;p051gamecharacters&#8217;<br />
+  File.open(&#8216;game&#8217;) do |f|<br />
+    @gc = Marshal.load(f)<br />
+  end</li>
+</ol>
+puts @gc.power.to_s + &#8217; &#8217; + @gc.type + &#8217; &#8217;
+@gc.weapons.each do |w|
+puts w + &#8217; &#8217;
+end
+<p></code></p>
+<p>Marshal only serializes data structures. It can&#8217;t serialize Ruby code (like Proc objects), or resources allocated by other processes (like file handles or database connections). Marshal just gives you an error when you try to serialize a file.</p>
    </div>
 
    <div class="column span-5 append-2 last">

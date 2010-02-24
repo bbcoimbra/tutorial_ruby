@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>modulos mixins</title>
+   <meta name="author" content="" />
+
+   <!--- Blueprint CSS Framework -->
+   <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection">
+   <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print">
+   <!--[if IE]>
+      <link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection">
+   <![endif]-->
+
+   <!-- CodeRay syntax highlighting CSS -->
+   <link rel="stylesheet" href="css/coderay.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="css/site.css" type="text/css" media="screen, projection" />
+</head>
+<body>
+
+<div class="container">
+
+   <div class="column span-20 prepend-2 append-2 first last" id="header">
+     <p class="title">Tutorial de Ruby do GURU-SP</p>
+     <hr>
+   </div>
+
+   <div class="column span-15 prepend-2 first">
+      <p class="title">modulos mixins</p>
+<p>Ruby Modules are similar to classes in that they hold a collection of methods, constants, and other module and class definitions. Modules are defined much like classes are, but the module keyword is used in place of the class keyword. Unlike classes, you cannot create objects based on modules nor can you subclass them; instead, you specify that you want the functionality of a particular module to be added to the functionality of a class, or of a specific object. Modules stand alone; there is no &#8220;module hierarchy&#8221; of inheritance. Modules is a good place to collect all your constants in a central location.</p>
+<p>Modules serve two purposes:</p>
+<ul>
+	<li>First they act as namespace, letting you define methods whose names will not clash with those defined elsewhere. The examples p058mytrig.rb, p059mymoral.rb, p060usemodule.rb illustrates this.</li>
+</ul>
+<p><code class='ruby'></p>
+<ol>
+	<li>p058mytrig.rb<br />
+  module Trig<br />
+    PI = 3.1416</li>
+	<li>class methods<br />
+    def Trig.sin(x)</li>
+	<li>&#8230;<br />
+    end<br />
+    def Trig.cos(x)</li>
+	<li>&#8230;<br />
+    end<br />
+  end</li>
+</ol>
+<ol>
+	<li>p059mymoral.rb<br />
+  module Moral<br />
+    VERY_BAD = 0<br />
+    BAD         = 1<br />
+    def Moral.sin(badness)</li>
+	<li>&#8230;<br />
+    end<br />
+  end</li>
+</ol>
+<ol>
+	<li>p060usemodule.rb<br />
+  require &#8216;p058mytrig&#8217;<br />
+  require &#8216;p059mymoral&#8217;<br />
+  Trig.sin(Trig::PI/4)<br />
+  Moral.sin(Moral::VERY_BAD)<br />
+</code></li>
+</ol>
+<ul>
+	<li>Second, they allow you to share functionality between classes &#8211; if a class mixes in a module, that module&#8217;s instance methods become available as if they had been defined in the class. They get mixed in. The program p061mixins.rb illustrates this.</li>
+</ul>
+<p><code class='ruby'></p>
+<ol>
+	<li>p061mixins.rb<br />
+  module D<br />
+    def initialize(name)<br />
+      @name =name<br />
+    end<br />
+    def to_s<br />
+      @name<br />
+    end<br />
+  end</li>
+</ol>
+module Debug
+include D
+<ol>
+	<li>Methods that act as queries are often</li>
+	<li>named with a trailing ?<br />
+    def who_am_i?<br />
+      &#8220;#{self.class.name} (\##{self.object_id}): #{self.to_s}&#8221;<br />
+    end<br />
+  end</li>
+</ol>
+class Phonograph
+<ol>
+	<li>the include statement simply makes a reference to a named module</li>
+	<li>If that module is in a separate file, use require to drag the file in</li>
+	<li>before using include<br />
+    include Debug</li>
+	<li>&#8230;<br />
+  end</li>
+</ol>
+class EightTrack
+include Debug
+<ol>
+	<li>&#8230;<br />
+  end</li>
+</ol>
+ph = Phonograph.new(&#8220;West End Blues&#8221;)
+et = EightTrack.new(&#8220;Real Pillow&#8221;)
+puts ph.who_am_i?
+puts et.who_am_i?
+<p></code></p>
+<div class='box'>
+<p>Observe how we use require or load. require and load take strings as their arguments.</p>
+<p>require &#8216;motorcycle&#8217; or load &#8216;motorcycle.rb&#8217;</p>
+<p>include takes the name of a module, in the form of a constant, as in include Stuff.</p>
+<p>The include method accepts any number of Module objects to mix in:<br />
+include Enumerable, Comparable</p>
+<p>Although every class is a module, the include method does not allow a class to be included within another class.</p>
+</div>
+<p>Some more examples:</p>
+<p><code class='ruby'></p>
+<ol>
+	<li>p062stuff.rb</li>
+	<li>A module may contain constants, methods and classes.</li>
+	<li>No instances</li>
+</ol>
+module Stuff
+C = 10
+def Stuff.m(x)  # prefix with the module name for a class method
+C*x
+end
+def p(x)        # an instance method, mixin for other classes
+C + x
+end
+class T
+@t = 2
+end
+end
+puts Stuff::C     # Stuff namespace
+puts Stuff.m(3)   # like a class method
+x = Stuff::T.new
+<ol>
+	<li>uninitialized constant error, if you try the following</li>
+	<li>puts C</li>
+</ol>
+#&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;
+<ol>
+	<li>p063stuffusage.rb<br />
+  require &#8216;p062stuff&#8217;     # loads Stuff module from Stuff.rb</li>
+	<li>$: is a system variable &#8212; contains the path for loads<br />
+  class D<br />
+    include Stuff     # refers to the loaded module<br />
+    puts Stuff.m(4)<br />
+  end</li>
+</ol>
+d = D.new
+puts d.p(5)         # method p from Stuff
+puts $:             # array of folders to search for load
+$: &lt;&lt; &#8220;c:/&#8221;         # add a folder to the load path
+puts $:
+puts Stuff.m(5)     # Stuff class methods not called from D object
+<p></code></p>
+<div class='box'>
+<p>Remember that you can mix in more than one module in a class. However, a class cannot inherit from more than one class. Class names tend to be nouns, while module names are often adjectives.</p>
+</div>
+<div class='box'>
+<p>IN RAILS: The Rails source code makes heavy use of modules, in particular the technique of reopening the definition bodies of both classes and modules.</p>
+</div>
+   </div>
+
+   <div class="column span-5 append-2 last">
+
+      <p><a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP"><img src="images/logo_guru-sp.jpg" title="Logo do GURU-SP" alt="Logo do Guru-SP" /></a></p>
+
+      <div class="box">
+         <p>Este material tem como base o <a href="http://www.rubylearning.com" title="Ruby Learning">tutorial do RubyLearning.com de Satish Talim</a> e foi traduzido por membros do <a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP">GURU-SP</a> com a permissão do autor.</p>
+        <p class="last">Ajude o RubyLearning participando em algum dos <a href="http://www.rubylearning.org" title="cursos do Ruby Learning">cursos pagos</a> ou <a href="http://pledgie.com/campaigns/415" title="Ajude o Ruby Learning">fazendo uma doação para o projeto</a></p>
+      </div>
+
+      <p class="quiet"><a href="index.html" title="índice">Voltar para o índice</a></p>
+
+      <h5></h5>
+      <p class="incr"></p>
+   </div>
+
+   <div class="column span-20 prepend-2 append-2 first last" id="footer">
+     <hr />
+     <p>Tuturial de Ruby do <a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP">GURU-SP</a>. Este site foi criado com <a href="http://webby.rubyforge.org">Webby</a></p>
+   </div>
+
+</div>
+</body>
+</html>

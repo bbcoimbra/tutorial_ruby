@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>constantes</title>
+   <meta name="author" content="" />
+
+   <!--- Blueprint CSS Framework -->
+   <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection">
+   <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print">
+   <!--[if IE]>
+      <link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection">
+   <![endif]-->
+
+   <!-- CodeRay syntax highlighting CSS -->
+   <link rel="stylesheet" href="css/coderay.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="css/site.css" type="text/css" media="screen, projection" />
+</head>
+<body>
+
+<div class="container">
+
+   <div class="column span-20 prepend-2 append-2 first last" id="header">
+     <p class="title">Tutorial de Ruby do GURU-SP</p>
+     <hr>
+   </div>
+
+   <div class="column span-15 prepend-2 first">
+      <p class="title">constantes</p>
+<p>A Ruby constant is like a variable, except that its value is supposed to remain constant for the duration of the program. The Ruby interpreter does not actually enforce the constancy of constants, but it does issue a warning if a program changes the value of a constant (as shown in this trivial example) &#8211; p054constwarn.rb</p>
+<p><code class='ruby'></p>
+<ol>
+	<li>p054constwarn.rb<br />
+  A_CONST = 10<br />
+  A_CONST = 20<br />
+</code></li>
+</ol>
+<p>Produces a warning:</p>
+<p><code class='bash'>
+  p054constwarn.rb:3: warning: already initialized constant A_CONST
+</code></p>
+<p>Lexically, the names of constants look like the names of local variables, except that they begin with a capital letter. By convention, most constants are written in all uppercase with underscores to separate words, LIKE_THIS. Ruby class and module names are also constants, but they are conventionally written using initial capital letters and camel case, LikeThis.</p>
+<p>Note that constants do not exist until a value is actually assigned to them.</p>
+<p>Although constants should not be changed, you can modify the internal states of the objects they reference, as seen in p055constalter.rb</p>
+<p><code class='ruby'></p>
+<ol>
+	<li>p055constalter.rb<br />
+  A_CONST = &#8220;Doshi&#8221;<br />
+  B_CONST = A_CONST<br />
+  A_CONST<sup class="footnote"><a href="#fn0">0</a></sup> = &#8220;J&#8221; # alter string referenced by constant<br />
+  puts A_CONST # displays Joshi<br />
+  puts B_CONST # also displays Joshi<br />
+</code></li>
+</ol>
+<div class='box'>
+<p>IN RAILS: You can find examples of this kind of operation (modify) in the Rails source code, where constants figure prominently and the objects they represent undergo fairly frequent changes.</p>
+</div>
+<p>Note:</p>
+<ul>
+	<li>Constants defined within a class or module may be accessed anywhere within the class or module.</li>
+	<li>Outside the class or module, they may be accessed using the scope operator, :: prefixed by an expression that returns the appropriate class or module.</li>
+	<li>Constants defined outside any class or module may be accessed as it is or by using the scope operator with no prefix.</li>
+	<li>Constants may not be defined in methods.</li>
+	<li>Constants may be added to existing classes and modules from the outside by using the class or module name and the scope operator before the constant name.</li>
+</ul>
+<p>The program p056const.rb shows all of this:</p>
+<p><code class='ruby'>
+  OUTER_CONST = 99</p>
+class Const
+def get_const
+CONST
+end
+CONST = OUTER_CONST + 1
+end
+puts Const.new.get_const
+puts Const::CONST
+puts ::OUTER_CONST
+puts Const::NEW_CONST = 123
+<p></code></p>
+<p>Another elaborate example on own methods in a class is p057mymethods2.rb In this example we shall also see how to write a class method.</p>
+<p><code class='ruby'></p>
+<ol>
+	<li>p057mymethods2.rb</li>
+	<li>variables and methods start lowercase<br />
+  $glob = 5             # global variables start with $<br />
+  class TestVar         # class name constant, start uppercase<br />
+   <code>@cla = 6            # class variables start with @</code><br />
+   CONST_VAL = 7        # constant style, all caps, underscore<br />
+   def initialize(x)    # constructor<br />
+    <code>inst = x           # instance variables start with @
+    @</code>cla += 1          # each object shares <code>@cla
+   end
+   def self.cla         # class method, getter
+    @</code>cla<br />
+   end<br />
+   def self.cla=(y)     # class method, setter, also TestVar.<br />
+    @@cla = y<br />
+   end<br />
+   def inst             # instance method, getter<br />
+    @inst<br />
+   end<br />
+   def inst=(i)         # instance method, setter<br />
+    @inst = i<br />
+   end<br />
+  end<br />
+  puts $glob<br />
+  test = TestVar.new(3) # calls constructor<br />
+  puts TestVar.cla      # calls getter<br />
+  puts test.inspect     # gives object ID and instance vars<br />
+  TestVar.cla = 4       # calls setter<br />
+  test.inst=8           # calls setter<br />
+  puts TestVar.cla<br />
+  puts test.inst        # calls getter<br />
+  other = TestVar.new(17)<br />
+  puts other.inspect<br />
+  puts TestVar.cla<br />
+</code></li>
+</ol>
+<h2>Summary</h2>
+<p>I have listed down all the important points you need to remember after you have completed the following topics: Object Serialization, Modules/Mixins, Self, Constants.</p>
+   </div>
+
+   <div class="column span-5 append-2 last">
+
+      <p><a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP"><img src="images/logo_guru-sp.jpg" title="Logo do GURU-SP" alt="Logo do Guru-SP" /></a></p>
+
+      <div class="box">
+         <p>Este material tem como base o <a href="http://www.rubylearning.com" title="Ruby Learning">tutorial do RubyLearning.com de Satish Talim</a> e foi traduzido por membros do <a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP">GURU-SP</a> com a permissão do autor.</p>
+        <p class="last">Ajude o RubyLearning participando em algum dos <a href="http://www.rubylearning.org" title="cursos do Ruby Learning">cursos pagos</a> ou <a href="http://pledgie.com/campaigns/415" title="Ajude o Ruby Learning">fazendo uma doação para o projeto</a></p>
+      </div>
+
+      <p class="quiet"><a href="index.html" title="índice">Voltar para o índice</a></p>
+
+      <h5></h5>
+      <p class="incr"></p>
+   </div>
+
+   <div class="column span-20 prepend-2 append-2 first last" id="footer">
+     <hr />
+     <p>Tuturial de Ruby do <a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP">GURU-SP</a>. Este site foi criado com <a href="http://webby.rubyforge.org">Webby</a></p>
+   </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+   <title>self</title>
+   <meta name="author" content="" />
+
+   <!--- Blueprint CSS Framework -->
+   <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection">
+   <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print">
+   <!--[if IE]>
+      <link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection">
+   <![endif]-->
+
+   <!-- CodeRay syntax highlighting CSS -->
+   <link rel="stylesheet" href="css/coderay.css" type="text/css" />
+
+   <!-- Homepage CSS -->
+   <link rel="stylesheet" href="css/site.css" type="text/css" media="screen, projection" />
+</head>
+<body>
+
+<div class="container">
+
+   <div class="column span-20 prepend-2 append-2 first last" id="header">
+     <p class="title">Tutorial de Ruby do GURU-SP</p>
+     <hr>
+   </div>
+
+   <div class="column span-15 prepend-2 first">
+      <p class="title">self</p>
+<p>At every point when your program is running, there is one and only one self &#8211; the current or default object accessible to you in your program. You can tell which object self  represents by following a small set of rules.<br />
+Top level context</p>
+<p>The top level context is before you have entered any other context, such as a class definition. Therefore the term top level refers to program code written outside of a class or module. If you open a new text file and type:</p>
+<p><code class='ruby'>
+  x = 1
+</code></p>
+<p>you have created a top level local variable x. If you type:</p>
+<p><code class='ruby'>
+  def m
+  end
+</code></p>
+<p>you have created a top level method &#8211; an instance method of Object (even though self is not Object). Top-level methods are always private. Ruby provides you with a start-up self at the top level. If you type:</p>
+<p><code class='ruby'>
+  puts self
+</code></p>
+<p>it displays main &#8211; a special term the default self object uses to refer to itself. The class of the main object is Object.</p>
+<h2>Self inside class and module definitions</h2>
+<p>In a class or module definition, self is the class or module object.</p>
+<p><code class='ruby'></p>
+<ol>
+	<li>p063xself1.rb<br />
+  class S<br />
+    puts &#8216;Just started class S&#8217;<br />
+    puts self<br />
+    module M<br />
+      puts &#8216;Nested module S::M&#8217;<br />
+      puts self<br />
+    end<br />
+    puts &#8216;Back in the outer level of S&#8217;<br />
+    puts self<br />
+  end<br />
+</code></li>
+</ol>
+<p>The output is:</p>
+<p><code class='bash'>
+  &gt;ruby p063xself1.rb
+  Just started class S
+  S
+  Nested module S::M
+  S::M
+  Back in the outer level of S
+  S
+  &gt;Exit code: 0
+</code></p>
+<h2>Self in instance method definitions</h2>
+<p>At the time the method definition is executed, the most you can say is that self inside this method will be some future object that has access to this method.</p>
+<p><code class='ruby'></p>
+<ol>
+	<li>p063xself2.rb<br />
+  class S<br />
+    def m<br />
+      puts &#8216;Class S method m:&#8217;<br />
+      puts self<br />
+    end<br />
+  end<br />
+  s = S.new<br />
+  s.m<br />
+</code></li>
+</ol>
+<p>The output is:</p>
+<p><code class='bash'>
+  &gt;ruby p063xself2.rb
+  Class S method m:
+  #&lt;S:0x2835908&gt;
+  &gt;Exit code: 0
+</code></p>
+<p>The output #<S:0x2835908> is Ruby&#8217;s way of saying &#8220;an instance of S&#8221;.</p>
+<h2>Self in singleton-method and class-method definitions</h2>
+<p>Singleton methods &#8211; those attached to a particular object can be called by only one object. When a singleton method is executed, self is the object that owns the method, as shown below:</p>
+<p><code class='ruby'></p>
+<ol>
+	<li>p063xself3.rb<br />
+  obj = Object.new<br />
+  def obj.show<br />
+    print &#8216;I am an object: &#8217;<br />
+    puts &quot;here&#8217;s self inside a singleton method of mine:&quot;<br />
+    puts self<br />
+  end<br />
+  obj.show<br />
+  print &#8216;And inspecting obj from outside, &#8217;<br />
+  puts &quot;to be sure it&#8217;s the same object:&quot;<br />
+  puts obj<br />
+</code></li>
+</ol>
+<p>The output of the above example is:</p>
+<p><code class='bash'>
+  &gt;ruby p063xself3.rb
+  I am an object: here's self inside a singleton method of mine:
+  #&lt;Object:0x2835688&gt;
+  And inspecting obj from outside, to be sure it's the same object:
+  #&lt;Object:0x2835688&gt;
+  &gt;Exit code: 0
+</code></p>
+<p>Class methods are defined as singleton methods for class objects. Refer to the following program:</p>
+<p><code class='ruby'></p>
+<ol>
+	<li>p063xself4.rb<br />
+  class S<br />
+    def S.x<br />
+      puts &#8220;Class method of class S&#8221;<br />
+      puts self<br />
+    end<br />
+  end<br />
+  S.x<br />
+</code></li>
+</ol>
+<p>The output is:</p>
+<p><code class='bash'>
+  &gt;ruby p063xself4.rb
+  Class method of class S
+  S
+  &gt;Exit code: 0
+</code></p>
+<p>self inside a singleton method (a class method, in this case) is the object whose singleton method it is.</p>
+   </div>
+
+   <div class="column span-5 append-2 last">
+
+      <p><a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP"><img src="images/logo_guru-sp.jpg" title="Logo do GURU-SP" alt="Logo do Guru-SP" /></a></p>
+
+      <div class="box">
+         <p>Este material tem como base o <a href="http://www.rubylearning.com" title="Ruby Learning">tutorial do RubyLearning.com de Satish Talim</a> e foi traduzido por membros do <a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP">GURU-SP</a> com a permissão do autor.</p>
+        <p class="last">Ajude o RubyLearning participando em algum dos <a href="http://www.rubylearning.org" title="cursos do Ruby Learning">cursos pagos</a> ou <a href="http://pledgie.com/campaigns/415" title="Ajude o Ruby Learning">fazendo uma doação para o projeto</a></p>
+      </div>
+
+      <p class="quiet"><a href="index.html" title="índice">Voltar para o índice</a></p>
+
+      <h5></h5>
+      <p class="incr"></p>
+   </div>
+
+   <div class="column span-20 prepend-2 append-2 first last" id="footer">
+     <hr />
+     <p>Tuturial de Ruby do <a href="http://www.guru-sp.org" title="Grupo de Usuários Ruby de SP">GURU-SP</a>. Este site foi criado com <a href="http://webby.rubyforge.org">Webby</a></p>
+   </div>
+
+</div>
+</body>
+</html>
