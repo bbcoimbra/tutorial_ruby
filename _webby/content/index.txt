@@ -7,9 +7,9 @@ filter:
 ---
 p(title). <%= @page.title %>
 
-Este é mais um tutorial de Ruby, idealizado pelos membros do "GURU-SP":http://www.guru-sp.org (Grupo de Usuários Ruby de SP). Apesar de existir uma "grande quantidade de materiais de Ruby em português":http://guru-sp.com/index.php/Links espalhados em blogs, livros, screencasts e tutoriais, acreditamos que há espaço para mais um bom tutorial que sirva como referência para aprender as particularidades desta linguagem de programação.
+Este é mais um tutorial de Ruby, idealizado pelos membros do "GURU-SP":http://www.guru-sp.org (Grupo de Usuários Ruby de SP). Apesar de existir uma "grande quantidade de material relacionado a Ruby em língua portuguesa":http://guru-sp.com/index.php/Links espalhados em blogs, livros, screencasts e tutoriais, acreditamos que há espaço para mais um bom tutorial que sirva como referência para aprender algumas particularidades desta linguagem de programação.
 
-Nosso tutorial será baseado no material de Satish Talim do "Ruby Learning":http://www.rubylearning.com. Porém pretendemos não nos limitar somente ao conteúdo do Ruby Learning. Buscaremos melhorar o conteúdo e adicionar tópicos intermediários e avançados de Ruby.
+Nosso tutorial será baseado no material de Satish Talim do "Ruby Learning":http://www.rubylearning.com. Porém pretendemos não nos limitar somente ao conteúdo do Ruby Learning. É um tutorial introdutório e que não aborda tópicos avançados. Buscaremos melhorar o conteúdo e adicionar tópicos intermediários e avançados de Ruby.
 
 
 h2. Índice
@@ -53,20 +53,20 @@ h3. Parte 3
 # "Resumo 3":sumario-ruby3.html
 
 h3. Parte 4
-# "Arrays em Ruby [en]":arrays-em-ruby.html
+# "Arrays Ruby":arrays-ruby.html
 ## Atribuição paralela
 ## Variáveis de ambiente
 ## Argumentos de linha de comando
 ## Biblioteca GetoptLong
-# "Ranges (intervalos) [en]":ranges.html
-# "Símbolos em Ruby [en]":simbolos-em-ruby.html
-# "Hashes [en]":hashes.html
+# Ranges (intervalos)
+# Símbolos em Ruby
+# Hashes
 ## Usando símbolos como chaves hash
-# "Números aleatórios [en]":numeros-aleatorios.html
-# "Ler/escrever arquivos [en]":ler-escrever-arquivos.html
+# Números aleatórios
+# Ler/escrever arquivos
 ## Varrendo árvores de diretórios
 ## Acesso aleatório
-# "Resumo 4":sumario-ruby4.html
+# Resumo 4
 
 h3. Parte 5
 # "Expressões Regulares":expressoes-regulares.html
@@ -79,46 +79,46 @@ h3. Parte 5
 ## Coletor de Lixo (Garbage Collection)
 ## Métodos de Classe
 # "Ruby method missing (método faltando)":ruby-method-missing.html
-# "Procs em Ruby [en]":procs-em-ruby.html
-# "Incluindo Outros Arquivos [en]":incluindo-outros-arquivos.html
-# "Classes Abertas do Ruby [en]":classes-abertas-em-ruby.html
-# "Herança [en]":heranca.html
+# Procs em Ruby
+# Incluindo Outros Arquivos
+# Classes Abertas do Ruby
+# Herança
 ## Herança e variáveis de classe
-# "Sobreposição (Overriding) de Métodos [en]":sobreposicao-de-metodos.html
+# Sobreposição (Overriding) de Métodos
 ## Uso do super
 ## Redefinindo métodos
 ## Classe abstrata
-# "Métodos de Sobrecarga em Ruby [en]":metodos-de-sobrecarga-em-ruby.html
-# "Resumo 5 [en]":sumario-ruby5.html
+# Métodos de Sobrecarga em Ruby
+# Resumo 5
 
 h3. Parte 6
-# "Controle de Acesso [en]":controle-de-acesso.html
+# Controle de Acesso
 ## Sobrepondo métodos privados
 ## Métodos de nível mais alto
 ## Variáveis de instância são herdadas por uma sub-classe?
-# "Exceções [en]":excecoes.html
+# Exceções
 ## Lançando uma exceção
 ## Tratando uma exceção
 ## Exemplo de validação
-# "Logging com Ruby [en]":logging-com-ruby.html
-# "A classe Time do Ruby [en]":classe-time-do-ruby.html
-# "Resumo 6 [en]":sumario-ruby6.html
+# Logging com Ruby
+# A classe Time do Ruby
+# Resumo 6
 
 h3. Parte 7
-# "Duck Typing [en]":duck-typing.html
-# "Açúcares sintáticos do Ruby [en]":acucares-sintaticos-do-ruby.html
-# "Objetos mutáveis e imutáveis [en]":objetos-mutaveis-e-imutaveis.html
+# Duck Typing
+# Açúcares sintáticos do Ruby
+# Objetos mutáveis e imutáveis
 ## Congelando objetos
 ## Frozen? (congelado)
-# "Resumo 7 [en]":sumario-ruby7.html
+# Resumo 7
 
 h3. Parte 8
-# "Serialização de objetos [en]":serializacao-de-objetos.html
-# "Módulos / Mixins [en]":modulos-mixins.html
-# "Self [en]":self.html
+# Serialização de objetos
+# Módulos / Mixins
+# Self
 ## Contexto do nível mais alto
 ## Self dentro de definições de classes e módulos
 ## Self na definição de métodos de instância
 ## Self na definição de métodos singleton e métodos de classe
-# "Constantes [en]":constantes.html
-# "Resumo 8 [en]":sumario-ruby8.html
+# Constantes
+# Resumo 8
